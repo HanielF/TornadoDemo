@@ -2,7 +2,7 @@ import os
 BASE_DIRS = os.path.dirname(__file__)
 
 # 参数
-options = {"port": 9000}
+options = {"port": 8000}
 
 # 配置
 settings = {
