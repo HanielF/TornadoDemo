@@ -1,0 +1,89 @@
+Traceback (most recent call last):
+  File "server.py", line 10, in <module>
+    app = Application()
+  File "/home/hanielf/Learning/Tornado/h5Practice/application.py", line 12, in __init__
+    (r'/canvas', index.CanvasHandler),
+AttributeError: module 'views.index' has no attribute 'CanvasHandler'
+WARNING:tornado.access:404 GET /favicon.ico (::1) 31.63ms
+Traceback (most recent call last):
+  File "server.py", line 6, in <module>
+    from application import Application
+  File "/home/hanielf/Learning/Tornado/h5Practice/application.py", line 2, in <module>
+    from views import index, canvas
+ImportError: cannot import name 'canvas'
+Traceback (most recent call last):
+  File "server.py", line 6, in <module>
+    from application import Application
+  File "/home/hanielf/Learning/Tornado/h5Practice/application.py", line 2, in <module>
+    from views import index, drop
+ImportError: cannot import name 'drop'
+WARNING:tornado.access:404 GET /canvas (::1) 1.25ms
+Traceback (most recent call last):
+  File "server.py", line 14, in <module>
+    httpServer.bind(config.options["port"])
+  File "/usr/lib/python3.6/site-packages/tornado/tcpserver.py", line 205, in bind
+    port, address=address, family=family, backlog=backlog, reuse_port=reuse_port
+  File "/usr/lib/python3.6/site-packages/tornado/netutil.py", line 174, in bind_sockets
+    sock.bind(sockaddr)
+OSError: [Errno 98] Address already in use
+ERROR:tornado.application:Uncaught exception GET /drop (::1)
+HTTPServerRequest(protocol='http', host='localhost:9000', method='GET', uri='/drop', version='HTTP/1.1', remote_ip='::1')
+Traceback (most recent call last):
+  File "/usr/lib/python3.6/site-packages/tornado/web.py", line 1697, in _execute
+    result = method(*self.path_args, **self.path_kwargs)
+  File "/home/hanielf/Learning/Tornado/h5Practice/views/drop.py", line 10, in get
+    self.render('canvas.html')
+  File "/usr/lib/python3.6/site-packages/tornado/web.py", line 856, in render
+    html = self.render_string(template_name, **kwargs)
+  File "/usr/lib/python3.6/site-packages/tornado/web.py", line 1002, in render_string
+    t = loader.load(template_name)
+  File "/usr/lib/python3.6/site-packages/tornado/template.py", line 445, in load
+    self.templates[name] = self._create_template(name)
+  File "/usr/lib/python3.6/site-packages/tornado/template.py", line 476, in _create_template
+    with open(path, "rb") as f:
+FileNotFoundError: [Errno 2] No such file or directory: '/home/hanielf/Learning/Tornado/h5Practice/templates/canvas.html'
+ERROR:tornado.access:500 GET /drop (::1) 4.05ms
+Traceback (most recent call last):
+  File "server.py", line 14, in <module>
+    httpServer.bind(config.options["port"])
+  File "/usr/lib/python3.6/site-packages/tornado/tcpserver.py", line 205, in bind
+    port, address=address, family=family, backlog=backlog, reuse_port=reuse_port
+  File "/usr/lib/python3.6/site-packages/tornado/netutil.py", line 174, in bind_sockets
+    sock.bind(sockaddr)
+OSError: [Errno 98] Address already in use
+Traceback (most recent call last):
+  File "server.py", line 10, in <module>
+    app = Application()
+  File "/home/hanielf/Learning/Tornado/h5Practice/application.py", line 14, in __init__
+    ('r/canvas',canvas.CanvasHandler)
+NameError: name 'canvas' is not defined
+Traceback (most recent call last):
+  File "server.py", line 6, in <module>
+    from application import Application
+  File "/home/hanielf/Learning/Tornado/h5Practice/application.py", line 2, in <module>
+    from views import index, drop, canvas
+  File "/home/hanielf/Learning/Tornado/h5Practice/views/canvas.py", line 2
+    form tornado.web import RequestHandler
+               ^
+SyntaxError: invalid syntax
+Traceback (most recent call last):
+  File "server.py", line 6, in <module>
+    from application import Application
+  File "/home/hanielf/Learning/Tornado/h5Practice/application.py", line 2, in <module>
+    from views import index, drop, canvas
+  File "/home/hanielf/Learning/Tornado/h5Practice/views/canvas.py", line 2
+    form tornado.web import RequestHandler
+               ^
+SyntaxError: invalid syntax
+Traceback (most recent call last):
+  File "server.py", line 14, in <module>
+    httpServer.bind(config.options["port"])
+  File "/usr/lib/python3.6/site-packages/tornado/tcpserver.py", line 205, in bind
+    port, address=address, family=family, backlog=backlog, reuse_port=reuse_port
+  File "/usr/lib/python3.6/site-packages/tornado/netutil.py", line 174, in bind_sockets
+    sock.bind(sockaddr)
+OSError: [Errno 98] Address already in use
+WARNING:tornado.access:404 GET /canvas (::1) 5.28ms
+WARNING:tornado.access:404 GET /canvas (::1) 1.84ms
+WARNING:tornado.access:404 GET /canvas (::1) 1.31ms
+WARNING:tornado.access:404 GET /canvas (::1) 1.33ms
