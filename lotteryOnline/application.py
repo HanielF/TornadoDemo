@@ -1,5 +1,5 @@
 import tornado.web
-from views import index, poem
+from views import index, lottery
 import config
 
 
@@ -9,7 +9,7 @@ class Application(tornado.web.Application):
         # 路由
         handlers = [
             (r'/', index.IndexHandler),
-            (r'/poem', poem.PoemHandler),
+            (r'/lottery', lottery.LotteryHandler),
         ]
 
         # 添加配置
