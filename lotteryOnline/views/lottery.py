@@ -4,9 +4,25 @@ from tornado.web import RequestHandler
 
 class LotteryHandler(RequestHandler):
     def post(self, *args, **kwargs):
-        noun1 = self.get_argument('noun1')
-        noun2 = self.get_argument('noun2')
-        verb = self.get_argument('verb')
-        noun3 = self.get_argument('noun3')
+        first = self.get_argument('first')
+        second = self.get_argument('second')
+        third = self.get_argument('third')
+        staff = self.get_argument('staff')
+        nameFile = self.get_argument('nameFile')
+
+        if len(staff) != 0:
+            names = staff.split('，')
+        elif nameFile is not None:
+            pass
+        else:
+            pass
+
         self.render(
-            'lottery.html', first=noun1, second=noun2, third=verb, forth=noun3)
+            'lottery.html',
+            first=first,
+            second=second,
+            third=third,
+            staff=staff,
+            nameFile=nameFile,
+            names=names[0],
+        )

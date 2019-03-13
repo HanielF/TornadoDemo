@@ -1,0 +1,19 @@
+WARNING:tornado.access:404 GET /favicon.ico (::1) 0.53ms
+Traceback (most recent call last):
+  File "server.py", line 5, in <module>
+    import config
+  File "/home/hanielf/Learning/Tornado/lotteryOnline/config.py", line 11
+    "debug": True
+          ^
+SyntaxError: invalid syntax
+WARNING:tornado.general:400 POST /lottery (::1): Missing argument noun1
+WARNING:tornado.access:400 POST /lottery (::1) 54.57ms
+Traceback (most recent call last):
+  File "server.py", line 6, in <module>
+    from application import Application
+  File "/home/hanielf/Learning/Tornado/lotteryOnline/application.py", line 2, in <module>
+    from views import index, lottery
+  File "/home/hanielf/Learning/Tornado/lotteryOnline/views/lottery.py", line 14
+    elif nameFile not None:
+                         ^
+SyntaxError: invalid syntax

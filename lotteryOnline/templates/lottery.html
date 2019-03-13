@@ -1,10 +1,49 @@
 <!DOCTYPE html>
 <html>
-    <head><title>Poem Maker Pro</title></head>
-    <body>
-        <h1>Your poem</h1>
-        <p>Two {{first}} diverged in a {{second}}, and I—<br>
-I took the one less travelled by,<br>
-And that has {{third}} all the {{forth}}.</p>
+  <style>
+    p{
+      text-align:left;
+    }
+    #sub1{
+      width:200px;
+      height:200px;
+      margin:20 auto;
+      text-align: center;
+      position: fixed;
+      top:70px;
+      left:45%;
+    }
+  </style>
+
+    <head><title>Lottery Online</title></head>
+    <body style="text-align:center">
+      <h1>抽奖结果</h1>
+        <table border="1" cellpadding="3" cellspacing="0"  style="border-style:solid;margin:auto">
+          <tr>
+            <td>一等奖人数</td>
+            <td>{{first}} 名</td>
+          </tr>
+          <tr>
+            <td>二等奖人数</td>
+            <td>{{second}} 名</td>
+          </tr>
+          <tr>
+            <td>三等奖人数</td>
+            <td>{{third}} 名</td>
+          </tr>
+          <tr>
+            <td>人名</td>
+            <td>{{staff}}</td>
+          </tr>
+          <tr>
+            <td>文件</td>
+            <td>{{nameFile}}</td>
+          </tr>
+          <tr>
+            <td>结果</td>
+            <td>{{names}}</td>
+          </tr>
+        </table>
+      <!-- </div> -->
     </body>
 </html>

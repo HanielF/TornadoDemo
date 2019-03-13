@@ -1,16 +1,78 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE>
 <html>
     <head><title>Lottery Online</title></head>
-    <body>
-      <div id="div1"style="margin:20 auto;text-align:center">
-        <h1>在线抽奖</h1>
-        <form method="post" action="/lottery">
-        <p>Plural noun<br><input type="text" name="noun1"></p>
-        <p>Singular noun<br><input type="text" name="noun2"></p>
-        <p>Verb (past tense)<br><input type="text" name="verb"></p>
-        <p>Noun<br><input type="text" name="noun3"></p>
-        <input type="submit">
-        </form>
+
+    <style>
+    .number{
+      width:50px;
+    }
+
+    #sub1{
+      width:200px;
+      height:200px;
+      margin:20 auto;
+      text-align: center;
+      position: fixed;
+      top:90px;
+      left:40%;
+    }
+    #sub2{
+      width:200px;
+      height:200px;
+      margin:20 auto;
+      text-align:center;
+      position: fixed;
+      top:90px;
+      right:35%;
+    }
+    p{
+      text-align:left;
+    }
+    #staff{
+      width: 140px;
+      height:60px;
+      margin-top:10px;
+      word-wrap:normal;
+      overflow:scroll;
+      overflow-x:hidden;
+      resize:none;
+    }
+    #submit{
+      position:fixed;
+      top:310px;
+      left:47%;
+      width:90px;
+      height:30px; 
+      text-align:center;
+    }
+    #file{
+      text-align:center;
+      position:fixed;
+      top:245px;
+      left:40%;
+    }
+    </style>
+
+    <body >
+      <h1 style="text-align:center">在线抽奖活动</h1>
+
+      <form method="post" action="/lottery">
+      <div id="sub1">
+        <p>请设置奖项人数:<br></p>
+          <p>一等奖: <input type="text" class="number" name="first"> 名</p>
+        <p>二等奖: <input type="text" class="number" name="second"> 名</p>
+        <p>三等奖: <input type="text" class="number" name="third"> 名</p>
       </div>
+
+      <div id="sub2">
+        <p >请设置抽奖人员: <br></p>
+        <p >输入人名(用逗号分隔):<br><textArea name="staff" id="staff" ></textArea></p>
+      </div>
+
+      <p id="file">选择文件导入: <input type="file" name="nameFile"><br></p>
+      <input type="submit" id="submit">
+      </form>
+
     </body>
 </html>
