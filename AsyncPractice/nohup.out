@@ -1,0 +1,112 @@
+WARNING:tornado.access:404 GET /favicon.ico (::1) 1.77ms
+WARNING:tornado.access:404 GET /student (::1) 0.50ms
+WARNING:tornado.access:404 GET /home (::1) 0.82ms
+WARNING:tornado.access:404 GET /students (::1) 0.98ms
+WARNING:tornado.access:404 GET /students (::1) 0.52ms
+Traceback (most recent call last):
+  File "server.py", line 14, in <module>
+    httpServer.bind(config.options["port"])
+  File "/usr/lib/python3.6/site-packages/tornado/tcpserver.py", line 205, in bind
+    port, address=address, family=family, backlog=backlog, reuse_port=reuse_port
+  File "/usr/lib/python3.6/site-packages/tornado/netutil.py", line 174, in bind_sockets
+    sock.bind(sockaddr)
+OSError: [Errno 98] Address already in use
+Traceback (most recent call last):
+  File "server.py", line 6, in <module>
+    from application import Application
+  File "/home/hanielf/Learning/Tornado/AsyncPractice/application.py", line 2, in <module>
+    from views import index
+  File "/home/hanielf/Learning/Tornado/AsyncPractice/views/index.py", line 17
+    def get(self, *args, **kwargs):
+      ^
+IndentationError: expected an indented block
+Traceback (most recent call last):
+  File "server.py", line 6, in <module>
+    from application import Application
+  File "/home/hanielf/Learning/Tornado/AsyncPractice/application.py", line 2, in <module>
+    from views import index
+  File "/home/hanielf/Learning/Tornado/AsyncPractice/views/index.py", line 14, in <module>
+    class StudentsHandler(RequestHandler):
+  File "/home/hanielf/Learning/Tornado/AsyncPractice/views/index.py", line 24, in StudentsHandler
+    @tornado.web.asynchronous
+AttributeError: module 'tornado.web' has no attribute 'asynchronous'
+Traceback (most recent call last):
+  File "server.py", line 6, in <module>
+    from application import Application
+  File "/home/hanielf/Learning/Tornado/AsyncPractice/application.py", line 2, in <module>
+    from views import index
+  File "/home/hanielf/Learning/Tornado/AsyncPractice/views/index.py", line 14, in <module>
+    class StudentsHandler(RequestHandler):
+  File "/home/hanielf/Learning/Tornado/AsyncPractice/views/index.py", line 24, in StudentsHandler
+    @tornado.web.asynchronous
+AttributeError: module 'tornado.web' has no attribute 'asynchronous'
+Traceback (most recent call last):
+  File "server.py", line 6, in <module>
+    from application import Application
+  File "/home/hanielf/Learning/Tornado/AsyncPractice/application.py", line 2, in <module>
+    from views import index
+  File "/home/hanielf/Learning/Tornado/AsyncPractice/views/index.py", line 14, in <module>
+    class StudentsHandler(RequestHandler):
+  File "/home/hanielf/Learning/Tornado/AsyncPractice/views/index.py", line 24, in StudentsHandler
+    @tornado.web.asynchronous
+AttributeError: module 'tornado.web' has no attribute 'asynchronous'
+ERROR:asyncio:Future exception was never retrieved
+future: <Future finished exception=ValueError('Unsupported url scheme: www.baid.com',)>
+Traceback (most recent call last):
+  File "/usr/lib/python3.6/site-packages/tornado/simple_httpclient.py", line 293, in run
+    raise ValueError("Unsupported url scheme: %s" % self.request.url)
+ValueError: Unsupported url scheme: www.baid.com
+ERROR:asyncio:Future exception was never retrieved
+future: <Future finished exception=ValueError('Unsupported url scheme: www.baid.com',)>
+Traceback (most recent call last):
+  File "/usr/lib/python3.6/site-packages/tornado/simple_httpclient.py", line 293, in run
+    raise ValueError("Unsupported url scheme: %s" % self.request.url)
+ValueError: Unsupported url scheme: www.baid.com
+ERROR:asyncio:Future exception was never retrieved
+future: <Future finished exception=ValueError('Unsupported url scheme: www.baid.com',)>
+Traceback (most recent call last):
+  File "/usr/lib/python3.6/site-packages/tornado/simple_httpclient.py", line 293, in run
+    raise ValueError("Unsupported url scheme: %s" % self.request.url)
+ValueError: Unsupported url scheme: www.baid.com
+ERROR:asyncio:Future exception was never retrieved
+future: <Future finished exception=HTTP 403: Forbidden>
+tornado.httpclient.HTTPClientError: HTTP 403: Forbidden
+Traceback (most recent call last):
+  File "server.py", line 6, in <module>
+    from application import Application
+  File "/home/hanielf/Learning/Tornado/AsyncPractice/application.py", line 2, in <module>
+    from views import index
+  File "/home/hanielf/Learning/Tornado/AsyncPractice/views/index.py", line 14, in <module>
+    class StudentsHandler(RequestHandler):
+  File "/home/hanielf/Learning/Tornado/AsyncPractice/views/index.py", line 25, in StudentsHandler
+    @tornado.web.asynchronous
+AttributeError: module 'tornado.web' has no attribute 'asynchronous'
+Traceback (most recent call last):
+  File "server.py", line 6, in <module>
+    from application import Application
+  File "/home/hanielf/Learning/Tornado/AsyncPractice/application.py", line 2, in <module>
+    from views import index
+  File "/home/hanielf/Learning/Tornado/AsyncPractice/views/index.py", line 14, in <module>
+    class StudentsHandler(RequestHandler):
+  File "/home/hanielf/Learning/Tornado/AsyncPractice/views/index.py", line 25, in StudentsHandler
+    @tornado.web.asynchronous
+AttributeError: module 'tornado.web' has no attribute 'asynchronous'
+Traceback (most recent call last):
+  File "server.py", line 6, in <module>
+    from application import Application
+  File "/home/hanielf/Learning/Tornado/AsyncPractice/application.py", line 2, in <module>
+    from views import index
+  File "/home/hanielf/Learning/Tornado/AsyncPractice/views/index.py", line 14, in <module>
+    class StudentsHandler(RequestHandler):
+  File "/home/hanielf/Learning/Tornado/AsyncPractice/views/index.py", line 25, in StudentsHandler
+    @tornado.web.asynchronous
+AttributeError: module 'tornado.web' has no attribute 'asynchronous'
+Traceback (most recent call last):
+  File "server.py", line 6, in <module>
+    from application import Application
+  File "/home/hanielf/Learning/Tornado/AsyncPractice/application.py", line 2, in <module>
+    from views import index
+  File "/home/hanielf/Learning/Tornado/AsyncPractice/views/index.py", line 58
+    def getData(self)
+                    ^
+SyntaxError: invalid syntax
