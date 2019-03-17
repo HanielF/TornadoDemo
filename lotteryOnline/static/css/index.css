@@ -1,0 +1,48 @@
+.number{
+  width:50px;
+}
+
+#sub1{
+  width:200px;
+  height:200px;
+  margin:20 auto;
+  text-align: center;
+  position: fixed;
+  top:90px;
+  left:40%;
+}
+#sub2{
+  width:200px;
+  height:200px;
+  margin:20 auto;
+  text-align:center;
+  position: fixed;
+  top:90px;
+  right:35%;
+}
+p{
+  text-align:left;
+}
+#staff{
+  width: 140px;
+  height:60px;
+  margin-top:10px;
+  word-wrap:normal;
+  overflow:scroll;
+  overflow-x:hidden;
+  resize:none;
+}
+#submit{
+  position:fixed;
+  top:310px;
+  left:47%;
+  width:90px;
+  height:30px; 
+  text-align:center;
+}
+#file{
+  text-align:center;
+  position:fixed;
+  top:245px;
+  left:40%;
+}

@@ -13,37 +13,42 @@
       top:70px;
       left:45%;
     }
+    td{
+      text-align:center;
+    }
   </style>
 
     <head><title>Lottery Online</title></head>
     <body style="text-align:center">
       <h1>抽奖结果</h1>
-        <table border="1" cellpadding="3" cellspacing="0" style="border-style:solid;margin:auto">
+        <table border="1" cellpadding="4" cellspacing="0" style="border-style:solid;margin:auto;">
           <tr>
-            <td>一等奖人数</td>
-            <td>{{first}} 名</td>
+            <td>一等奖</td>
+            <td>
+              {% for name in first %} 
+              &nbsp{{name}}&nbsp
+              {% end %}
+            </td>
           </tr>
           <tr>
-            <td>二等奖人数</td>
-            <td>{{second}} 名</td>
+            <td>二等奖</td>
+            <td>
+             {% for name in second %} 
+             &nbsp{{name}}&nbsp
+             {% end %}
+            </td>
           </tr>
           <tr>
-            <td>三等奖人数</td>
-            <td>{{third}} 名</td>
-          </tr>
-          <tr>
-            <td>人名</td>
-            <td>{{staff}}</td>
-          </tr>
-          <tr>
-            <td>文件</td>
-            <td>{{nameFile}}</td>
-          </tr>
-          <tr>
-            <td>结果</td>
-            <td>{{names}}</td>
+            <td>三等奖</td>
+             <td>
+             {% for name in third %} 
+             &nbsp{{name}}&nbsp
+             {% end %}
+            </td>           
           </tr>
         </table>
-      <!-- </div> -->
+        <br>
+        <input type="button" value="再来一次" action='lottery'>
+        <input type="button" value="返回" onclick="location.href=('/')" />
     </body>
 </html>
