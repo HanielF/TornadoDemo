@@ -87,3 +87,36 @@ WARNING:tornado.access:404 GET /canvas (::1) 5.28ms
 WARNING:tornado.access:404 GET /canvas (::1) 1.84ms
 WARNING:tornado.access:404 GET /canvas (::1) 1.31ms
 WARNING:tornado.access:404 GET /canvas (::1) 1.33ms
+WARNING:tornado.access:404 GET /favicon.ico (::1) 1.38ms
+ERROR:tornado.application:Uncaught exception POST /upload (::1)
+HTTPServerRequest(protocol='http', host='localhost:9000', method='POST', uri='/upload', version='HTTP/1.1', remote_ip='::1')
+Traceback (most recent call last):
+  File "/usr/lib/python3.6/site-packages/tornado/web.py", line 1697, in _execute
+    result = method(*self.path_args, **self.path_kwargs)
+  File "/home/hanielf/Learning/Tornado/h5Practice/views/upload.py", line 12, in post
+    self.write(files)
+  File "/usr/lib/python3.6/site-packages/tornado/web.py", line 834, in write
+    raise TypeError(message)
+TypeError: write() only accepts bytes, unicode, and dict objects. Lists not accepted for security reasons; see http://www.tornadoweb.org/en/stable/web.html#tornado.web.RequestHandler.write
+ERROR:tornado.access:500 POST /upload (::1) 4.98ms
+ERROR:tornado.application:Uncaught exception POST /upload (::1)
+HTTPServerRequest(protocol='http', host='localhost:9000', method='POST', uri='/upload', version='HTTP/1.1', remote_ip='::1')
+Traceback (most recent call last):
+  File "/usr/lib/python3.6/site-packages/tornado/web.py", line 1697, in _execute
+    result = method(*self.path_args, **self.path_kwargs)
+  File "/home/hanielf/Learning/Tornado/h5Practice/views/upload.py", line 12, in post
+    self.write(files[0])
+  File "/usr/lib/python3.6/site-packages/tornado/web.py", line 836, in write
+    chunk = escape.json_encode(chunk)
+  File "/usr/lib/python3.6/site-packages/tornado/escape.py", line 75, in json_encode
+    return json.dumps(value).replace("</", "<\\/")
+  File "/usr/lib/python3.6/json/__init__.py", line 231, in dumps
+    return _default_encoder.encode(obj)
+  File "/usr/lib/python3.6/json/encoder.py", line 199, in encode
+    chunks = self.iterencode(o, _one_shot=True)
+  File "/usr/lib/python3.6/json/encoder.py", line 257, in iterencode
+    return _iterencode(o, 0)
+  File "/usr/lib/python3.6/json/encoder.py", line 180, in default
+    o.__class__.__name__)
+TypeError: Object of type 'bytes' is not JSON serializable
+ERROR:tornado.access:500 POST /upload (::1) 80.24ms

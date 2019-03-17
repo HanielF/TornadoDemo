@@ -1,5 +1,5 @@
 import tornado.web
-from views import index, drop, canvas
+from views import index, drop, canvas, upload
 import config
 
 
@@ -11,7 +11,8 @@ class Application(tornado.web.Application):
             (r'/', index.IndexHandler),
             #  (r'/canvas.html', canvas.CanvasHandler),
             (r'/drop', drop.DropHandler),
-            (r'/canvas', canvas.CanvasHandler)
+            (r'/canvas', canvas.CanvasHandler),
+            (r'/upload', upload.UploadHandler),
         ]
 
         # 添加配置
