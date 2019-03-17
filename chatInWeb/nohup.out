@@ -1,0 +1,294 @@
+Traceback (most recent call last):
+  File "server.py", line 5, in <module>
+    import config
+  File "/home/hanielf/Learning/Tornado/chatInWeb/config.py", line 11
+    "debug": True
+          ^
+SyntaxError: invalid syntax
+ERROR:tornado.application:home.html code:
+ 1  def _tt_execute():  # home.html:0
+ 2      _tt_buffer = []  # home.html:0
+ 3      _tt_append = _tt_buffer.append  # home.html:0
+ 4      _tt_append(b'<!DOCTYPE html>\n<html lang="en">\n<head>\n<meta charset="UTF-8">\n<title>\xe8\x81\x8a\xe5\xa4\xa9\xe7\x95\x8c\xe9\x9d\xa2</title>\n<!-- <script type="text/javascript" charset="UTF-8" src="')  # home.html:6
+ 5      _tt_tmp = static_url(js/jquery.min.js')  # home.html:6
+ 6      if isinstance(_tt_tmp, _tt_string_types): _tt_tmp = _tt_utf8(_tt_tmp)  # home.html:6
+ 7      else: _tt_tmp = _tt_utf8(str(_tt_tmp))  # home.html:6
+ 8      _tt_tmp = _tt_utf8(xhtml_escape(_tt_tmp))  # home.html:6
+ 9      _tt_append(_tt_tmp)  # home.html:6
+10      _tt_append(b'"></script> -->\n</head>\n<body>\n<div id = "contents" style="width:500px;height:500px;overflow:auto"></div>\n<div>\n<input type="text" id="message"/>\n<button onclick="sendMessage()">\xe5\x8f\x91\xe9\x80\x81</button>\n</div>\n<script>\n// \xe5\xbb\xba\xe7\xab\x8bwebsocket\xe8\xbf\x9e\xe6\x8e\xa5\nvar ws = new WebSocket("ws://127.0.0.1:8000/chat")\n//\xe6\x9c\x8d\xe5\x8a\xa1\xe5\x99\xa8\xe8\xbf\x94\xe5\x9b\x9e\xe6\x95\xb0\xe6\x8d\xae\xe5\x9b\x9e\xe5\x8e\xbb\xe4\xb9\x8b\xe5\x90\x8e\xe8\xa6\x81\xe6\x8e\xa5\xe6\x94\xb6\xe6\x95\xb0\xe6\x8d\xae\n//\xe5\x90\x91div\xe9\x87\x8c\xe9\x9d\xa2\xe6\xb7\xbb\xe5\x8a\xa0<p>\xe6\xa0\x87\xe7\xad\xbe\nws.onmessage = function (e) {\n$(\'#contents\').append("<p>")+e.data+"</p>"\n}\nfunction sendMessage() {\nconsole.log("*********")\n}\n<script>\n</body>\n')  # home.html:33
+11      return _tt_utf8('').join(_tt_buffer)  # home.html:0
+ERROR:tornado.application:Uncaught exception GET /home (::1)
+HTTPServerRequest(protocol='http', host='localhost:8000', method='GET', uri='/home', version='HTTP/1.1', remote_ip='::1')
+Traceback (most recent call last):
+  File "/usr/lib/python3.6/site-packages/tornado/web.py", line 1697, in _execute
+    result = method(*self.path_args, **self.path_kwargs)
+  File "/home/hanielf/Learning/Tornado/chatInWeb/views/index.py", line 21, in get
+    self.render("home.html")
+  File "/usr/lib/python3.6/site-packages/tornado/web.py", line 856, in render
+    html = self.render_string(template_name, **kwargs)
+  File "/usr/lib/python3.6/site-packages/tornado/web.py", line 1002, in render_string
+    t = loader.load(template_name)
+  File "/usr/lib/python3.6/site-packages/tornado/template.py", line 445, in load
+    self.templates[name] = self._create_template(name)
+  File "/usr/lib/python3.6/site-packages/tornado/template.py", line 477, in _create_template
+    template = Template(f.read(), name=name, loader=self)
+  File "/usr/lib/python3.6/site-packages/tornado/template.py", line 329, in __init__
+    dont_inherit=True,
+  File "home_html.generated.py", line 5
+    _tt_tmp = static_url(js/jquery.min.js')  # home.html:6
+                                                         ^
+SyntaxError: EOL while scanning string literal
+ERROR:tornado.access:500 GET /home (::1) 5.44ms
+WARNING:tornado.access:404 GET /favicon.ico (::1) 0.73ms
+ERROR:tornado.application:home.html code:
+ 1  def _tt_execute():  # home.html:0
+ 2      _tt_buffer = []  # home.html:0
+ 3      _tt_append = _tt_buffer.append  # home.html:0
+ 4      _tt_append(b'<!DOCTYPE html>\n<html lang="en">\n<head>\n<meta charset="UTF-8">\n<title>\xe8\x81\x8a\xe5\xa4\xa9\xe7\x95\x8c\xe9\x9d\xa2</title>\n<!-- <script type="text/javascript" charset="UTF-8" src="')  # home.html:6
+ 5      _tt_tmp = static_url(js/jquery.min.js')  # home.html:6
+ 6      if isinstance(_tt_tmp, _tt_string_types): _tt_tmp = _tt_utf8(_tt_tmp)  # home.html:6
+ 7      else: _tt_tmp = _tt_utf8(str(_tt_tmp))  # home.html:6
+ 8      _tt_tmp = _tt_utf8(xhtml_escape(_tt_tmp))  # home.html:6
+ 9      _tt_append(_tt_tmp)  # home.html:6
+10      _tt_append(b'"></script> -->\n</head>\n<body>\n<div id = "contents" style="width:500px;height:500px;overflow:auto"></div>\n<div>\n<input type="text" id="message"/>\n<button onclick="sendMessage()">\xe5\x8f\x91\xe9\x80\x81</button>\n</div>\n<script>\n// \xe5\xbb\xba\xe7\xab\x8bwebsocket\xe8\xbf\x9e\xe6\x8e\xa5\nvar ws = new WebSocket("ws://127.0.0.1:8000/chat")\n//\xe6\x9c\x8d\xe5\x8a\xa1\xe5\x99\xa8\xe8\xbf\x94\xe5\x9b\x9e\xe6\x95\xb0\xe6\x8d\xae\xe5\x9b\x9e\xe5\x8e\xbb\xe4\xb9\x8b\xe5\x90\x8e\xe8\xa6\x81\xe6\x8e\xa5\xe6\x94\xb6\xe6\x95\xb0\xe6\x8d\xae\n//\xe5\x90\x91div\xe9\x87\x8c\xe9\x9d\xa2\xe6\xb7\xbb\xe5\x8a\xa0<p>\xe6\xa0\x87\xe7\xad\xbe\nws.onmessage = function (e) {\n$(\'#contents\').append("<p>")+e.data+"</p>"\n}\nfunction sendMessage() {\nconsole.log("*********")\n}\n<script>\n</body>\n')  # home.html:33
+11      return _tt_utf8('').join(_tt_buffer)  # home.html:0
+ERROR:tornado.application:Uncaught exception GET /home (::1)
+HTTPServerRequest(protocol='http', host='localhost:8000', method='GET', uri='/home', version='HTTP/1.1', remote_ip='::1')
+Traceback (most recent call last):
+  File "/usr/lib/python3.6/site-packages/tornado/web.py", line 1697, in _execute
+    result = method(*self.path_args, **self.path_kwargs)
+  File "/home/hanielf/Learning/Tornado/chatInWeb/views/index.py", line 21, in get
+    self.render("home.html")
+  File "/usr/lib/python3.6/site-packages/tornado/web.py", line 856, in render
+    html = self.render_string(template_name, **kwargs)
+  File "/usr/lib/python3.6/site-packages/tornado/web.py", line 1002, in render_string
+    t = loader.load(template_name)
+  File "/usr/lib/python3.6/site-packages/tornado/template.py", line 445, in load
+    self.templates[name] = self._create_template(name)
+  File "/usr/lib/python3.6/site-packages/tornado/template.py", line 477, in _create_template
+    template = Template(f.read(), name=name, loader=self)
+  File "/usr/lib/python3.6/site-packages/tornado/template.py", line 329, in __init__
+    dont_inherit=True,
+  File "home_html.generated.py", line 5
+    _tt_tmp = static_url(js/jquery.min.js')  # home.html:6
+                                                         ^
+SyntaxError: EOL while scanning string literal
+ERROR:tornado.access:500 GET /home (::1) 4.03ms
+ERROR:tornado.application:home.html code:
+ 1  def _tt_execute():  # home.html:0
+ 2      _tt_buffer = []  # home.html:0
+ 3      _tt_append = _tt_buffer.append  # home.html:0
+ 4      _tt_append(b'<!DOCTYPE html>\n<html lang="en">\n<head>\n<meta charset="UTF-8">\n<title>\xe8\x81\x8a\xe5\xa4\xa9\xe7\x95\x8c\xe9\x9d\xa2</title>\n</head>\n<!-- <script type="text/javascript" charset="UTF-8" src="')  # home.html:7
+ 5      _tt_tmp = static_url(js/jquery.min.js')  # home.html:7
+ 6      if isinstance(_tt_tmp, _tt_string_types): _tt_tmp = _tt_utf8(_tt_tmp)  # home.html:7
+ 7      else: _tt_tmp = _tt_utf8(str(_tt_tmp))  # home.html:7
+ 8      _tt_tmp = _tt_utf8(xhtml_escape(_tt_tmp))  # home.html:7
+ 9      _tt_append(_tt_tmp)  # home.html:7
+10      _tt_append(b'"></script> -->\n<body>\n<div id = "contents" style="width:500px;height:500px;overflow:auto"></div>\n<div>\n<input type="text" id="message"/>\n<button onclick="sendMessage()">\xe5\x8f\x91\xe9\x80\x81</button>\n</div>\n<script>\n// \xe5\xbb\xba\xe7\xab\x8bwebsocket\xe8\xbf\x9e\xe6\x8e\xa5\nvar ws = new WebSocket("ws://127.0.0.1:8000/chat")\n//\xe6\x9c\x8d\xe5\x8a\xa1\xe5\x99\xa8\xe8\xbf\x94\xe5\x9b\x9e\xe6\x95\xb0\xe6\x8d\xae\xe5\x9b\x9e\xe5\x8e\xbb\xe4\xb9\x8b\xe5\x90\x8e\xe8\xa6\x81\xe6\x8e\xa5\xe6\x94\xb6\xe6\x95\xb0\xe6\x8d\xae\n//\xe5\x90\x91div\xe9\x87\x8c\xe9\x9d\xa2\xe6\xb7\xbb\xe5\x8a\xa0<p>\xe6\xa0\x87\xe7\xad\xbe\nws.onmessage = function (e) {\n$(\'#contents\').append("<p>")+e.data+"</p>"\n}\nfunction sendMessage() {\nconsole.log("*********")\n}\n<script>\n</body>\n')  # home.html:33
+11      return _tt_utf8('').join(_tt_buffer)  # home.html:0
+ERROR:tornado.application:Uncaught exception GET /home (::1)
+HTTPServerRequest(protocol='http', host='localhost:8000', method='GET', uri='/home', version='HTTP/1.1', remote_ip='::1')
+Traceback (most recent call last):
+  File "/usr/lib/python3.6/site-packages/tornado/web.py", line 1697, in _execute
+    result = method(*self.path_args, **self.path_kwargs)
+  File "/home/hanielf/Learning/Tornado/chatInWeb/views/index.py", line 21, in get
+    self.render("home.html")
+  File "/usr/lib/python3.6/site-packages/tornado/web.py", line 856, in render
+    html = self.render_string(template_name, **kwargs)
+  File "/usr/lib/python3.6/site-packages/tornado/web.py", line 1002, in render_string
+    t = loader.load(template_name)
+  File "/usr/lib/python3.6/site-packages/tornado/template.py", line 445, in load
+    self.templates[name] = self._create_template(name)
+  File "/usr/lib/python3.6/site-packages/tornado/template.py", line 477, in _create_template
+    template = Template(f.read(), name=name, loader=self)
+  File "/usr/lib/python3.6/site-packages/tornado/template.py", line 329, in __init__
+    dont_inherit=True,
+  File "home_html.generated.py", line 5
+    _tt_tmp = static_url(js/jquery.min.js')  # home.html:7
+                                                         ^
+SyntaxError: EOL while scanning string literal
+ERROR:tornado.access:500 GET /home (::1) 6.67ms
+ERROR:tornado.application:home.html code:
+ 1  def _tt_execute():  # home.html:0
+ 2      _tt_buffer = []  # home.html:0
+ 3      _tt_append = _tt_buffer.append  # home.html:0
+ 4      _tt_append(b'<!DOCTYPE html>\n<html lang="en">\n<head>\n<meta charset="UTF-8">\n<title>\xe8\x81\x8a\xe5\xa4\xa9\xe7\x95\x8c\xe9\x9d\xa2</title>\n</head>\n<script type="text/javascript" charset="UTF-8" src="')  # home.html:7
+ 5      _tt_tmp = static_url(js/jquery.min.js')  # home.html:7
+ 6      if isinstance(_tt_tmp, _tt_string_types): _tt_tmp = _tt_utf8(_tt_tmp)  # home.html:7
+ 7      else: _tt_tmp = _tt_utf8(str(_tt_tmp))  # home.html:7
+ 8      _tt_tmp = _tt_utf8(xhtml_escape(_tt_tmp))  # home.html:7
+ 9      _tt_append(_tt_tmp)  # home.html:7
+10      _tt_append(b'"></script>\n<body>\n<div id = "contents" style="width:500px;height:500px;overflow:auto"></div>\n<div>\n<input type="text" id="message"/>\n<button onclick="sendMessage()">\xe5\x8f\x91\xe9\x80\x81</button>\n</div>\n<script>\n// \xe5\xbb\xba\xe7\xab\x8bwebsocket\xe8\xbf\x9e\xe6\x8e\xa5\nvar ws = new WebSocket("ws://127.0.0.1:8000/chat")\n//\xe6\x9c\x8d\xe5\x8a\xa1\xe5\x99\xa8\xe8\xbf\x94\xe5\x9b\x9e\xe6\x95\xb0\xe6\x8d\xae\xe5\x9b\x9e\xe5\x8e\xbb\xe4\xb9\x8b\xe5\x90\x8e\xe8\xa6\x81\xe6\x8e\xa5\xe6\x94\xb6\xe6\x95\xb0\xe6\x8d\xae\n//\xe5\x90\x91div\xe9\x87\x8c\xe9\x9d\xa2\xe6\xb7\xbb\xe5\x8a\xa0<p>\xe6\xa0\x87\xe7\xad\xbe\nws.onmessage = function (e) {\n$(\'#contents\').append("<p>")+e.data+"</p>"\n}\nfunction sendMessage() {\nconsole.log("*********")\n}\n<script>\n</body>\n')  # home.html:33
+11      return _tt_utf8('').join(_tt_buffer)  # home.html:0
+ERROR:tornado.application:Uncaught exception GET /home (::1)
+HTTPServerRequest(protocol='http', host='localhost:8000', method='GET', uri='/home', version='HTTP/1.1', remote_ip='::1')
+Traceback (most recent call last):
+  File "/usr/lib/python3.6/site-packages/tornado/web.py", line 1697, in _execute
+    result = method(*self.path_args, **self.path_kwargs)
+  File "/home/hanielf/Learning/Tornado/chatInWeb/views/index.py", line 21, in get
+    self.render("home.html")
+  File "/usr/lib/python3.6/site-packages/tornado/web.py", line 856, in render
+    html = self.render_string(template_name, **kwargs)
+  File "/usr/lib/python3.6/site-packages/tornado/web.py", line 1002, in render_string
+    t = loader.load(template_name)
+  File "/usr/lib/python3.6/site-packages/tornado/template.py", line 445, in load
+    self.templates[name] = self._create_template(name)
+  File "/usr/lib/python3.6/site-packages/tornado/template.py", line 477, in _create_template
+    template = Template(f.read(), name=name, loader=self)
+  File "/usr/lib/python3.6/site-packages/tornado/template.py", line 329, in __init__
+    dont_inherit=True,
+  File "home_html.generated.py", line 5
+    _tt_tmp = static_url(js/jquery.min.js')  # home.html:7
+                                                         ^
+SyntaxError: EOL while scanning string literal
+ERROR:tornado.access:500 GET /home (::1) 1.33ms
+WARNING:tornado.access:400 GET /chat (::1) 1.21ms
+Traceback (most recent call last):
+  File "server.py", line 14, in <module>
+    httpServer.bind(config.options["port"])
+  File "/usr/lib/python3.6/site-packages/tornado/tcpserver.py", line 205, in bind
+    port, address=address, family=family, backlog=backlog, reuse_port=reuse_port
+  File "/usr/lib/python3.6/site-packages/tornado/netutil.py", line 174, in bind_sockets
+    sock.bind(sockaddr)
+OSError: [Errno 98] Address already in use
+Traceback (most recent call last):
+  File "server.py", line 14, in <module>
+    httpServer.bind(config.options["port"])
+  File "/usr/lib/python3.6/site-packages/tornado/tcpserver.py", line 205, in bind
+    port, address=address, family=family, backlog=backlog, reuse_port=reuse_port
+  File "/usr/lib/python3.6/site-packages/tornado/netutil.py", line 174, in bind_sockets
+    sock.bind(sockaddr)
+OSError: [Errno 98] Address already in use
+Traceback (most recent call last):
+  File "server.py", line 14, in <module>
+    httpServer.bind(config.options["port"])
+  File "/usr/lib/python3.6/site-packages/tornado/tcpserver.py", line 205, in bind
+    port, address=address, family=family, backlog=backlog, reuse_port=reuse_port
+  File "/usr/lib/python3.6/site-packages/tornado/netutil.py", line 174, in bind_sockets
+    sock.bind(sockaddr)
+OSError: [Errno 98] Address already in use
+Traceback (most recent call last):
+  File "server.py", line 14, in <module>
+    httpServer.bind(config.options["port"])
+  File "/usr/lib/python3.6/site-packages/tornado/tcpserver.py", line 205, in bind
+    port, address=address, family=family, backlog=backlog, reuse_port=reuse_port
+  File "/usr/lib/python3.6/site-packages/tornado/netutil.py", line 174, in bind_sockets
+    sock.bind(sockaddr)
+OSError: [Errno 98] Address already in use
+Traceback (most recent call last):
+  File "server.py", line 14, in <module>
+    httpServer.bind(config.options["port"])
+  File "/usr/lib/python3.6/site-packages/tornado/tcpserver.py", line 205, in bind
+    port, address=address, family=family, backlog=backlog, reuse_port=reuse_port
+  File "/usr/lib/python3.6/site-packages/tornado/netutil.py", line 174, in bind_sockets
+    sock.bind(sockaddr)
+OSError: [Errno 98] Address already in use
+Traceback (most recent call last):
+  File "server.py", line 14, in <module>
+    httpServer.bind(config.options["port"])
+  File "/usr/lib/python3.6/site-packages/tornado/tcpserver.py", line 205, in bind
+    port, address=address, family=family, backlog=backlog, reuse_port=reuse_port
+  File "/usr/lib/python3.6/site-packages/tornado/netutil.py", line 174, in bind_sockets
+    sock.bind(sockaddr)
+OSError: [Errno 98] Address already in use
+Traceback (most recent call last):
+  File "server.py", line 14, in <module>
+    httpServer.bind(config.options["port"])
+  File "/usr/lib/python3.6/site-packages/tornado/tcpserver.py", line 205, in bind
+    port, address=address, family=family, backlog=backlog, reuse_port=reuse_port
+  File "/usr/lib/python3.6/site-packages/tornado/netutil.py", line 174, in bind_sockets
+    sock.bind(sockaddr)
+OSError: [Errno 98] Address already in use
+WARNING:tornado.access:404 GET /favicon.ico (::1) 2.65ms
+ERROR:tornado.application:Uncaught exception GET /chat (127.0.0.1)
+HTTPServerRequest(protocol='http', host='127.0.0.7:8000', method='GET', uri='/chat', version='HTTP/1.1', remote_ip='127.0.0.1')
+Traceback (most recent call last):
+  File "/usr/lib/python3.6/site-packages/tornado/web.py", line 1699, in _execute
+    result = await result
+  File "/usr/lib/python3.6/site-packages/tornado/websocket.py", line 269, in get
+    if origin is not None and not self.check_origin(origin):
+TypeError: check_origin() takes 1 positional argument but 2 were given
+ERROR:tornado.access:500 GET /chat (127.0.0.1) 1.65ms
+ERROR:tornado.application:Uncaught exception GET /chat (127.0.0.1)
+HTTPServerRequest(protocol='http', host='127.0.0.7:8000', method='GET', uri='/chat', version='HTTP/1.1', remote_ip='127.0.0.1')
+Traceback (most recent call last):
+  File "/usr/lib/python3.6/site-packages/tornado/web.py", line 1699, in _execute
+    result = await result
+  File "/usr/lib/python3.6/site-packages/tornado/websocket.py", line 269, in get
+    if origin is not None and not self.check_origin(origin):
+TypeError: check_origin() takes 1 positional argument but 2 were given
+ERROR:tornado.access:500 GET /chat (127.0.0.1) 3.07ms
+ERROR:tornado.application:Uncaught exception GET /chat (127.0.0.1)
+HTTPServerRequest(protocol='http', host='127.0.0.7:8000', method='GET', uri='/chat', version='HTTP/1.1', remote_ip='127.0.0.1')
+Traceback (most recent call last):
+  File "/usr/lib/python3.6/site-packages/tornado/websocket.py", line 952, in _accept_connection
+    open_result = handler.open(*handler.open_args, **handler.open_kwargs)
+  File "/home/hanielf/Learning/Tornado/chatInWeb/views/index.py", line 59, in open
+    self.users.add(self)  # 建立连接后添加用户到容器中
+AttributeError: 'list' object has no attribute 'add'
+ERROR:tornado.application:Uncaught exception GET /chat (127.0.0.1)
+HTTPServerRequest(protocol='http', host='127.0.0.7:8000', method='GET', uri='/chat', version='HTTP/1.1', remote_ip='127.0.0.1')
+Traceback (most recent call last):
+  File "/usr/lib/python3.6/site-packages/tornado/websocket.py", line 952, in _accept_connection
+    open_result = handler.open(*handler.open_args, **handler.open_kwargs)
+  File "/home/hanielf/Learning/Tornado/chatInWeb/views/index.py", line 59, in open
+    self.users.add(self)  # 建立连接后添加用户到容器中
+AttributeError: 'list' object has no attribute 'add'
+Traceback (most recent call last):
+  File "server.py", line 14, in <module>
+    httpServer.bind(config.options["port"])
+  File "/usr/lib/python3.6/site-packages/tornado/tcpserver.py", line 205, in bind
+    port, address=address, family=family, backlog=backlog, reuse_port=reuse_port
+  File "/usr/lib/python3.6/site-packages/tornado/netutil.py", line 174, in bind_sockets
+    sock.bind(sockaddr)
+OSError: [Errno 98] Address already in use
+Traceback (most recent call last):
+  File "server.py", line 14, in <module>
+    httpServer.bind(config.options["port"])
+  File "/usr/lib/python3.6/site-packages/tornado/tcpserver.py", line 205, in bind
+    port, address=address, family=family, backlog=backlog, reuse_port=reuse_port
+  File "/usr/lib/python3.6/site-packages/tornado/netutil.py", line 174, in bind_sockets
+    sock.bind(sockaddr)
+OSError: [Errno 98] Address already in use
+Traceback (most recent call last):
+  File "server.py", line 6, in <module>
+    from application import Application
+  File "/home/hanielf/Learning/Tornado/chatInWeb/application.py", line 3, in <module>
+    from views import index
+  File "/home/hanielf/Learning/Tornado/chatInWeb/views/index.py", line 27, in <module>
+    class ChatHandler(WebSocketHandler):
+  File "/home/hanielf/Learning/Tornado/chatInWeb/views/index.py", line 43, in ChatHandler
+    当客户端发送消息过来时调用
+NameError: name '当客户端发送消息过来时调用' is not defined
+ERROR:tornado.application:Uncaught exception GET /chat (127.0.0.1)
+HTTPServerRequest(protocol='http', host='127.0.0.7:8000', method='GET', uri='/chat', version='HTTP/1.1', remote_ip='127.0.0.1')
+Traceback (most recent call last):
+  File "/usr/lib/python3.6/site-packages/tornado/websocket.py", line 649, in _run_callback
+    result = callback(*args, **kwargs)
+  File "/home/hanielf/Learning/Tornado/chatInWeb/views/index.py", line 46, in on_message
+    users.write(u"[%s]说:%s" % (self.request.remoteip, message))
+AttributeError: 'HTTPServerRequest' object has no attribute 'remoteip'
+ERROR:tornado.application:Uncaught exception GET /chat (127.0.0.1)
+HTTPServerRequest(protocol='http', host='127.0.0.7:8000', method='GET', uri='/chat', version='HTTP/1.1', remote_ip='127.0.0.1')
+Traceback (most recent call last):
+  File "/usr/lib/python3.6/site-packages/tornado/websocket.py", line 649, in _run_callback
+    result = callback(*args, **kwargs)
+  File "/home/hanielf/Learning/Tornado/chatInWeb/views/index.py", line 46, in on_message
+    users.write_message(u"[%s]说:%s" % (self.request.remoteip, message))
+AttributeError: 'HTTPServerRequest' object has no attribute 'remoteip'
+ERROR:tornado.application:Uncaught exception GET /chat (127.0.0.1)
+HTTPServerRequest(protocol='http', host='127.0.0.7:8000', method='GET', uri='/chat', version='HTTP/1.1', remote_ip='127.0.0.1')
+Traceback (most recent call last):
+  File "/usr/lib/python3.6/site-packages/tornado/websocket.py", line 649, in _run_callback
+    result = callback(*args, **kwargs)
+  File "/home/hanielf/Learning/Tornado/chatInWeb/views/index.py", line 46, in on_message
+    users.write_message(u"[%s]说:%s" % (self.request.remoteip, message))
+AttributeError: 'HTTPServerRequest' object has no attribute 'remoteip'
+ERROR:tornado.application:Uncaught exception GET /chat (127.0.0.1)
+HTTPServerRequest(protocol='http', host='127.0.0.7:8000', method='GET', uri='/chat', version='HTTP/1.1', remote_ip='127.0.0.1')
+Traceback (most recent call last):
+  File "/usr/lib/python3.6/site-packages/tornado/websocket.py", line 649, in _run_callback
+    result = callback(*args, **kwargs)
+  File "/home/hanielf/Learning/Tornado/chatInWeb/views/index.py", line 46, in on_message
+    user.write_message(u"[%s]说:%s" % (self.request.remoteip, message))
+AttributeError: 'HTTPServerRequest' object has no attribute 'remoteip'
