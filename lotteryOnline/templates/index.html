@@ -1,31 +1,112 @@
-<!DOCTYPE html>
-<html>
-    <head>
-      <title>Lottery Online</title>
-      <meta charset="utf-8">
-      <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-      <link rel="stylesheet" type="text/css" href="{{static_url("css/index.css")}}"/>
-    </head>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!-- saved from url=(0042)flipin.html -->
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>在线抽奖平台</title>
+    <link href="{{static_url("css/demo.css")}}" rel="stylesheet" type="text/css">
+    <!--Framework-->
+  <script src="{{static_url("js/jquery-1.10.2.min.js")}}" type="text/javascript"></script>
+  <script src="{{static_url("js/jquery-ui.js")}}" type="text/javascript"></script>    <!--End Framework-->
+  <script src="{{static_url("js/jquery.ffform.js")}}" type="text/javascript"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#form').ffform(
+              { animation: 'flip', 
+                submitButton: '#submit', 
+                validationIndicator: '#validation', 
+                errorIndicator: '#error',
+                successIndicator: '#success',
+                'fields': [{ 'id': 'name', required: true,requiredMsg:'Name is required', type: 'alpha', validate: true, msg: 'Invalid Name' },
+                  { 'id': 'email', required: true,requiredMsg:'E-Mail is required', type: 'email', validate: true, msg: 'Invalid E-Mail Address' },
+                  { 'id': 'phone', required: false, type: 'custom', validate: false, msg: 'Invalid Phone #' },
+                  { 'id': 'message', required: false, type: 'text', validate: false, msg: ''}] 
+              }
+            );
+        });
 
-    <body >
-      <h1 style="text-align:center">在线抽奖活动</h1>
+        function disp_alert()
+        {
+          var fileValue = document.getElementById("fileId").value;
+          var staffValue = document.getElementById("staffId").value;
+          var firstValue = document.getElementById("first").value;
+          var secondValue = document.getElementById("second").value;
+          var thirdValue = document.getElementById("third").value;
 
-      <form method="post" action="/lottery" enctype="multipart/form-data">
-      <div id="sub1">
-        <p>请设置奖项人数:<br></p>
-        <p>一等奖: <input type="text" class="number" name="first"> 名</p>
-        <p>二等奖: <input type="text" class="number" name="second"> 名</p>
-        <p>三等奖: <input type="text" class="number" name="third"> 名</p>
-      </div>
+          var flag = true;
+          if(fileValue=='' && staffValue=='')
+          {
+            alert("请输入抽奖人员姓名或选择文件导入!");
+            flag = false;
+          }
+          else if(firstValue=='' || secondValue=='' || thirdValue=='')
+          {
+            alert("请检查人数！")
+            flag = false;
+          }
+          return flag;
+        }
+    </script>
+</head>
+<body>
+    <section id="getintouch" >
+        <div class="container" style="border-bottom: 0;">
+            <h1>
+                <span>在线抽奖平台</span>
+            </h1>
+        </div>
+        <div class="container">
+            <form class="contact" action="/lottery" method="post" id="form1" enctype="multipart/form-data" onsubmit="return disp_alert()" >
+            <div class="row clearfix">
+                <div class="lbl">
+                    <label for="first">
+                        一等奖人数</label>
+                </div>
+                <div class="ctrl">
+                    <input type="text" id="first" name="first" data-required="true">
+                </div>
+            </div>
+            <div class="row clearfix">
+                <div class="lbl">
+                    <label for="second">
+                        二等奖人数</label>
+                </div>
+                <div class="ctrl">
+                    <input type="text" id="second" name="second" data-required="true" >
+                </div>
+            </div>
+            <div class="row clearfix">
+                <div class="lbl">
+                    <label for="third">
+                        三等奖人数</label>
+                </div>
+                <div class="ctrl">
+                    <input type="text" id="third" name="third" data-required="required">
+                </div>
+            </div>
+            <div class="row clearfix">
+                <div class="lbl">
+                    <label for="names">
+                        抽奖名单(用空格分割)</label>
+                </div>
+                <div class="ctrl">
+                    <textarea id="staffId" name="staff" rows="6" cols="10"></textarea>
+                </div>
+            </div>
+            <div class="row  clearfix" >
+              <div class="lbl">
+                  <label for="fileId">选择文件导入:</label>&nbsp&nbsp
+                  <input type="file" id = "fileId" name="uploadFiles" /><br></p>
+              </div>
+            </div>
+            <div class="row  clearfix" style="text-align:center">
+                <div class="span10 offset2">
+                    <input type="submit" name="submit" id="submit" class="submit" value="submit" >
+                </div>
+            </div>
 
-      <div id="sub2">
-        <p >请设置抽奖人员: <br></p>
-        <p >输入人名(用逗号分隔):<br><textArea name="staff" id="staff" ></textArea></p>
-      </div>
-
-      <p id="file">选择文件导入: <input type="file" name="uploadFiles" /><br></p>
-      <input type="submit" id="submit">
-      </form>
-
-    </body>
+            </form>
+        </div>
+    </section>
+</body>
 </html>

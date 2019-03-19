@@ -1,54 +1,122 @@
-<!DOCTYPE html>
-<html>
-  <style>
-    p{
-      text-align:left;
-    }
-    #sub1{
-      width:200px;
-      height:200px;
-      margin:20 auto;
-      text-align: center;
-      position: fixed;
-      top:70px;
-      left:45%;
-    }
-    td{
-      text-align:center;
-    }
-  </style>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!-- saved from url=(0042)flipin.html -->
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>抽奖结果</title>
+    <link href="{{static_url("css/demo.css")}}" rel="stylesheet" type="text/css">
+    <!--Framework-->
+  <script src="{{static_url("js/jquery-1.10.2.min.js")}}" type="text/javascript"></script>
+  <script src="{{static_url("js/jquery-ui.js")}}" type="text/javascript"></script>    <!--End Framework-->
+  <script src="{{static_url("js/jquery.ffform.js")}}" type="text/javascript"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#form').ffform(
+              { animation: 'flip', 
+                submitButton: '#submit', 
+                validationIndicator: '#validation', 
+                errorIndicator: '#error',
+                successIndicator: '#success',
+                'fields': [{ 'id': 'name', required: true,requiredMsg:'Name is required', type: 'alpha', validate: true, msg: 'Invalid Name' },
+                  { 'id': 'email', required: true,requiredMsg:'E-Mail is required', type: 'email', validate: true, msg: 'Invalid E-Mail Address' },
+                  { 'id': 'phone', required: false, type: 'custom', validate: false, msg: 'Invalid Phone #' },
+                  { 'id': 'message', required: false, type: 'text', validate: false, msg: ''}] 
+              }
+            );
+        });
 
-    <head><title>Lottery Online</title></head>
-    <body style="text-align:center">
-      <h1>抽奖结果</h1>
-        <table border="1" cellpadding="4" cellspacing="0" style="border-style:solid;margin:auto;">
-          <tr>
-            <td>一等奖</td>
-            <td>
-              {% for name in first %} 
-              &nbsp{{name}}&nbsp
-              {% end %}
-            </td>
-          </tr>
-          <tr>
-            <td>二等奖</td>
-            <td>
-             {% for name in second %} 
-             &nbsp{{name}}&nbsp
-             {% end %}
-            </td>
-          </tr>
-          <tr>
-            <td>三等奖</td>
-             <td>
-             {% for name in third %} 
-             &nbsp{{name}}&nbsp
-             {% end %}
-            </td>           
-          </tr>
-        </table>
-        <br>
-        <input type="button" value="再来一次" action='lottery'>
-        <input type="button" value="返回" onclick="location.href=('/')" />
-    </body>
+        function disp_alert()
+        {
+          var fileValue = document.getElementById("fileId").value;
+          var staffValue = document.getElementById("staffId").value;
+          if(fileValue=='' && staffValue=='')
+          {
+            alert("请输入抽奖人员姓名或选择文件导入!");
+            return false;
+          }
+          else 
+          {
+            <!-- alert("yes") -->
+            return true;
+          }
+        }
+
+    </script>
+</head>
+<body>
+    <section id="getintouch" >
+        <div class="container" style="border-bottom: 0;">
+            <h1>
+                <span>在线抽奖平台</span>
+            </h1>
+        </div>
+
+
+        <div class="container">
+            <form class="contact" action="/lottery" method="post" id="form1" enctype="multipart/form-data" onsubmit="return disp_alert()" >
+            <div class="row clearfix">
+                <div class="lbl">
+                    <label for="first">
+                        一等奖:</label>
+                </div>
+                <ul>
+                  <li>
+                  {% for name in first %} 
+                  &nbsp{{name}}&nbsp
+                  {% end %}
+                  </li>
+                </ul>
+            </div>
+            <div class="row clearfix">
+                <div class="lbl">
+                    <label for="second">
+                        二等奖:</label>
+                </div>
+                <ul>
+                  <li>
+                  {% for name in second %} 
+                  &nbsp{{name}}&nbsp
+                  {% end %}
+                  </li>
+                </ul>
+            </div>
+            <div class="row clearfix">
+                <div class="lbl">
+                    <label for="third">
+                        三等奖:</label>
+                </div>
+                <ul>
+                  <li>
+                  {% for name in third %} 
+                  &nbsp{{name}}&nbsp
+                  {% end %}
+                  </li>
+                </ul>
+            </div>
+            <div class="row clearfix">
+                <div class="lbl">
+                    <label for="third">
+                        Tips:</label>
+                </div>
+                <ul>
+                  <li>每次抽奖抽五个人哦，下次抽奖请点击"再来一次"</li>
+                {% if info!="" %}
+                  <li>{{info}}</li>
+                {% end %}
+                </ul>, names, cnts
+            </div>
+
+            <div class="row  clearfix" >
+              <div class="span10 offset2" style="float:left; margin-left:240px ">
+                  <input type="button" value="返回主页" class="submit" onclick="location.href=('/')" />
+              </div>
+
+              <div class="span10 offset2" style="float:left; margin-left:30px ">
+                  <input type="button" name="again" id="again" class="submit" value="再来一次" onclick="location.href=('/lottery')" />
+              </div>
+            </div>
+            </form>
+        </div>
+    </section>
+</body>
 </html>

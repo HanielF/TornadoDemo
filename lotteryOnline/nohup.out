@@ -924,3 +924,221 @@ Traceback (most recent call last):
     if()
        ^
 SyntaxError: invalid syntax
+Traceback (most recent call last):
+  File "server.py", line 6, in <module>
+    from application import Application
+  File "/home/hanielf/Learning/Tornado/lotteryOnline/application.py", line 2, in <module>
+    from views import index, lottery
+  File "/home/hanielf/Learning/Tornado/lotteryOnline/views/lottery.py", line 18
+    if staff=='' && filebody==''
+                  ^
+SyntaxError: invalid syntax
+Traceback (most recent call last):
+  File "server.py", line 6, in <module>
+    from application import Application
+  File "/home/hanielf/Learning/Tornado/lotteryOnline/application.py", line 2, in <module>
+    from views import index, lottery
+  File "/home/hanielf/Learning/Tornado/lotteryOnline/views/lottery.py", line 63
+    info,
+    ^
+SyntaxError: positional argument follows keyword argument
+WARNING:tornado.access:404 GET /favicon.ico (::1) 1.16ms
+ERROR:tornado.application:Uncaught exception POST /lottery (::1)
+HTTPServerRequest(protocol='http', host='localhost:8000', method='POST', uri='/lottery', version='HTTP/1.1', remote_ip='::1')
+Traceback (most recent call last):
+  File "/usr/lib/python3.6/site-packages/tornado/web.py", line 1697, in _execute
+    result = method(*self.path_args, **self.path_kwargs)
+  File "/home/hanielf/Learning/Tornado/lotteryOnline/views/lottery.py", line 17, in post
+    self.request.files["uploadFiles"][0]['body'], encoding="utf-8")
+KeyError: 'uploadFiles'
+ERROR:tornado.access:500 POST /lottery (::1) 3.54ms
+ERROR:tornado.application:Uncaught exception POST /lottery (::1)
+HTTPServerRequest(protocol='http', host='localhost:8000', method='POST', uri='/lottery', version='HTTP/1.1', remote_ip='::1')
+Traceback (most recent call last):
+  File "/usr/lib/python3.6/site-packages/tornado/web.py", line 1697, in _execute
+    result = method(*self.path_args, **self.path_kwargs)
+  File "/home/hanielf/Learning/Tornado/lotteryOnline/views/lottery.py", line 17, in post
+    self.request.files["uploadFiles"][0]['body'], encoding="utf-8")
+KeyError: 'uploadFiles'
+ERROR:tornado.access:500 POST /lottery (::1) 1.25ms
+ERROR:tornado.application:Uncaught exception POST /lottery (::1)
+HTTPServerRequest(protocol='http', host='localhost:8000', method='POST', uri='/lottery', version='HTTP/1.1', remote_ip='::1')
+Traceback (most recent call last):
+  File "/usr/lib/python3.6/site-packages/tornado/web.py", line 1697, in _execute
+    result = method(*self.path_args, **self.path_kwargs)
+  File "/home/hanielf/Learning/Tornado/lotteryOnline/views/lottery.py", line 17, in post
+    self.request.files["uploadFiles"][0]['body'], encoding="utf-8")
+KeyError: 'uploadFiles'
+ERROR:tornado.access:500 POST /lottery (::1) 5.88ms
+ERROR:tornado.application:Uncaught exception POST /lottery (::1)
+HTTPServerRequest(protocol='http', host='localhost:8000', method='POST', uri='/lottery', version='HTTP/1.1', remote_ip='::1')
+Traceback (most recent call last):
+  File "/usr/lib/python3.6/site-packages/tornado/web.py", line 1697, in _execute
+    result = method(*self.path_args, **self.path_kwargs)
+  File "/home/hanielf/Learning/Tornado/lotteryOnline/views/lottery.py", line 17, in post
+    self.request.files["uploadFiles"][0]['body'], encoding="utf-8")
+KeyError: 'uploadFiles'
+ERROR:tornado.access:500 POST /lottery (::1) 4.56ms
+ERROR:tornado.application:Uncaught exception POST /lottery (::1)
+HTTPServerRequest(protocol='http', host='localhost:8000', method='POST', uri='/lottery', version='HTTP/1.1', remote_ip='::1')
+Traceback (most recent call last):
+  File "/usr/lib/python3.6/site-packages/tornado/web.py", line 1697, in _execute
+    result = method(*self.path_args, **self.path_kwargs)
+  File "/home/hanielf/Learning/Tornado/lotteryOnline/views/lottery.py", line 17, in post
+    self.request.files["uploadFiles"][0]['body'], encoding="utf-8")
+KeyError: 'uploadFiles'
+ERROR:tornado.access:500 POST /lottery (::1) 4.71ms
+WARNING:tornado.access:404 GET /static_url( (::1) 4.21ms
+WARNING:tornado.access:404 GET /static_url( (::1) 1.90ms
+WARNING:tornado.access:404 GET /static_url( (::1) 1.10ms
+WARNING:tornado.access:404 GET /static_url( (::1) 0.53ms
+WARNING:tornado.access:404 GET /index.html (::1) 0.68ms
+WARNING:tornado.access:404 GET /static_url( (::1) 1.30ms
+WARNING:tornado.access:404 GET /static_url( (::1) 0.62ms
+WARNING:tornado.access:404 GET /static_url( (::1) 0.73ms
+WARNING:tornado.access:404 GET /static_url( (::1) 1.46ms
+WARNING:tornado.access:404 GET /static_url( (::1) 2.08ms
+WARNING:tornado.access:404 GET /static_url( (::1) 1.04ms
+WARNING:tornado.access:404 GET /static_url( (::1) 1.45ms
+WARNING:tornado.access:404 GET /static_url( (::1) 0.85ms
+WARNING:tornado.access:404 GET /static_url( (::1) 2.00ms
+WARNING:tornado.access:404 GET /static_url( (::1) 0.95ms
+WARNING:tornado.access:404 GET /static_url( (::1) 1.01ms
+WARNING:tornado.access:404 GET /static_url( (::1) 0.81ms
+WARNING:tornado.general:400 POST /lottery (::1): Missing argument first
+WARNING:tornado.access:400 POST /lottery (::1) 4.97ms
+WARNING:tornado.general:400 POST /lottery (::1): Missing argument first
+WARNING:tornado.access:400 POST /lottery (::1) 2.77ms
+WARNING:tornado.general:400 POST /lottery (::1): Missing argument first
+WARNING:tornado.access:400 POST /lottery (::1) 1.71ms
+WARNING:tornado.general:400 POST /lottery (::1): Missing argument second
+WARNING:tornado.access:400 POST /lottery (::1) 7.33ms
+WARNING:tornado.general:400 POST /lottery (::1): Missing argument second
+WARNING:tornado.access:400 POST /lottery (::1) 4.88ms
+ERROR:tornado.application:Uncaught exception POST /lottery (::1)
+HTTPServerRequest(protocol='http', host='localhost:8000', method='POST', uri='/lottery', version='HTTP/1.1', remote_ip='::1')
+Traceback (most recent call last):
+  File "/usr/lib/python3.6/site-packages/tornado/web.py", line 1697, in _execute
+    result = method(*self.path_args, **self.path_kwargs)
+  File "/home/hanielf/Learning/Tornado/lotteryOnline/views/lottery.py", line 17, in post
+    self.request.files["uploadFiles"][0]['body'], encoding="utf-8")
+KeyError: 'uploadFiles'
+ERROR:tornado.access:500 POST /lottery (::1) 3.34ms
+ERROR:tornado.application:Uncaught exception POST /lottery (::1)
+HTTPServerRequest(protocol='http', host='localhost:8000', method='POST', uri='/lottery', version='HTTP/1.1', remote_ip='::1')
+Traceback (most recent call last):
+  File "/usr/lib/python3.6/site-packages/tornado/web.py", line 1697, in _execute
+    result = method(*self.path_args, **self.path_kwargs)
+  File "/home/hanielf/Learning/Tornado/lotteryOnline/views/lottery.py", line 56, in post
+    'lottery.html',
+  File "/usr/lib/python3.6/site-packages/tornado/web.py", line 856, in render
+    html = self.render_string(template_name, **kwargs)
+  File "/usr/lib/python3.6/site-packages/tornado/web.py", line 1005, in render_string
+    return t.generate(**namespace)
+  File "/usr/lib/python3.6/site-packages/tornado/template.py", line 361, in generate
+    return execute()
+  File "lottery_html.generated.py", line 5, in _tt_execute
+    for name in first:  # lottery.html:28
+NameError: name 'first' is not defined
+ERROR:tornado.access:500 POST /lottery (::1) 66.16ms
+ERROR:tornado.application:Uncaught exception POST /lottery (::1)
+HTTPServerRequest(protocol='http', host='localhost:8000', method='POST', uri='/lottery', version='HTTP/1.1', remote_ip='::1')
+Traceback (most recent call last):
+  File "/usr/lib/python3.6/site-packages/tornado/web.py", line 1697, in _execute
+    result = method(*self.path_args, **self.path_kwargs)
+  File "/home/hanielf/Learning/Tornado/lotteryOnline/views/lottery.py", line 60, in post
+    info=info,
+NameError: name 'info' is not defined
+ERROR:tornado.access:500 POST /lottery (::1) 5.91ms
+ERROR:tornado.application:Uncaught exception GET /lottery (::1)
+HTTPServerRequest(protocol='http', host='localhost:8000', method='GET', uri='/lottery', version='HTTP/1.1', remote_ip='::1')
+Traceback (most recent call last):
+  File "/usr/lib/python3.6/site-packages/tornado/web.py", line 1697, in _execute
+    result = method(*self.path_args, **self.path_kwargs)
+  File "/home/hanielf/Learning/Tornado/lotteryOnline/views/lottery.py", line 9, in get
+    self.render("lottery.html")
+  File "/usr/lib/python3.6/site-packages/tornado/web.py", line 856, in render
+    html = self.render_string(template_name, **kwargs)
+  File "/usr/lib/python3.6/site-packages/tornado/web.py", line 1005, in render_string
+    return t.generate(**namespace)
+  File "/usr/lib/python3.6/site-packages/tornado/template.py", line 361, in generate
+    return execute()
+  File "lottery_html.generated.py", line 29, in _tt_execute
+    for name in first:  # lottery.html:60
+NameError: name 'first' is not defined
+ERROR:tornado.access:500 GET /lottery (::1) 4.93ms
+WARNING:tornado.access:404 GET /favicon.ico (::1) 15.86ms
+Traceback (most recent call last):
+  File "server.py", line 10, in <module>
+    app = Application()
+  File "/home/hanielf/Learning/Tornado/lotteryOnline/application.py", line 14, in __init__
+    (r'/again', lottery.AgainHandler),
+AttributeError: module 'views.lottery' has no attribute 'AgainHandler'
+Traceback (most recent call last):
+  File "server.py", line 6, in <module>
+    from application import Application
+  File "/home/hanielf/Learning/Tornado/lotteryOnline/application.py", line 2, in <module>
+    from views import index, lottery
+  File "/home/hanielf/Learning/Tornado/lotteryOnline/views/lottery.py", line 16
+    class LotteryHandler(RequestHandler):
+    ^
+IndentationError: expected an indented block
+Traceback (most recent call last):
+  File "server.py", line 6, in <module>
+    from application import Application
+  File "/home/hanielf/Learning/Tornado/lotteryOnline/application.py", line 2, in <module>
+    from views import index, lottery
+  File "/home/hanielf/Learning/Tornado/lotteryOnline/views/lottery.py", line 17
+    if(len(names)==0||cnts.sum(axis=0)==0):
+     ^
+IndentationError: expected an indented block
+WARNING:tornado.access:404 GET /favicon.ico (::1) 1.18ms
+ERROR:tornado.application:Uncaught exception POST /lottery (::1)
+HTTPServerRequest(protocol='http', host='localhost:8000', method='POST', uri='/lottery', version='HTTP/1.1', remote_ip='::1')
+Traceback (most recent call last):
+  File "/usr/lib/python3.6/site-packages/tornado/web.py", line 1697, in _execute
+    result = method(*self.path_args, **self.path_kwargs)
+  File "/home/hanielf/Learning/Tornado/lotteryOnline/views/lottery.py", line 51, in post
+    cnts.append(self.get_argument('first'))
+AttributeError: 'numpy.ndarray' object has no attribute 'append'
+ERROR:tornado.access:500 POST /lottery (::1) 3.45ms
+WARNING:tornado.access:404 GET /favicon.ico (::1) 15.32ms
+Traceback (most recent call last):
+  File "server.py", line 6, in <module>
+    from application import Application
+  File "/home/hanielf/Learning/Tornado/lotteryOnline/application.py", line 2, in <module>
+    from views import index, lottery
+  File "/home/hanielf/Learning/Tornado/lotteryOnline/views/lottery.py", line 81
+    ,
+    ^
+SyntaxError: invalid syntax
+Traceback (most recent call last):
+  File "server.py", line 14, in <module>
+    httpServer.bind(config.options["port"])
+  File "/usr/lib/python3.6/site-packages/tornado/tcpserver.py", line 205, in bind
+    port, address=address, family=family, backlog=backlog, reuse_port=reuse_port
+  File "/usr/lib/python3.6/site-packages/tornado/netutil.py", line 174, in bind_sockets
+    sock.bind(sockaddr)
+OSError: [Errno 98] Address already in use
+Traceback (most recent call last):
+  File "server.py", line 10, in <module>
+    app = Application()
+  File "/home/hanielf/Learning/Tornado/lotteryOnline/application.py", line 14, in __init__
+    (r'/again', lottery.AgainHandler),
+AttributeError: module 'views.lottery' has no attribute 'AgainHandler'
+Traceback (most recent call last):
+  File "server.py", line 14, in <module>
+    httpServer.bind(config.options["port"])
+  File "/usr/lib/python3.6/site-packages/tornado/tcpserver.py", line 205, in bind
+    port, address=address, family=family, backlog=backlog, reuse_port=reuse_port
+  File "/usr/lib/python3.6/site-packages/tornado/netutil.py", line 174, in bind_sockets
+    sock.bind(sockaddr)
+OSError: [Errno 98] Address already in use
+Traceback (most recent call last):
+  File "server.py", line 14, in <module>
+    httpServer.bind(config.options["port"])
+  File "/usr/lib/python3.6/site-packages/tornado/tcpserver.py", line 205, in bind
+    port, address=address, family=family, backlog=backlog, reuse_port=reuse_port
+  File "/usr/lib/python3.6/site-packages/tornado/netutil.py", line 174, in bind_sockets
+    sock.bind(sockaddr)
+OSError: [Errno 98] Address already in use

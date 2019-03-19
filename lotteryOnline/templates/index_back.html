@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+    <head>
+      <title>Lottery Online</title>
+      <meta charset="utf-8">
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+      <link rel="stylesheet" type="text/css" href="{{static_url("css/index.css")}}"/>
+      <script type="text/javascript">
+        function disp_alert()
+        {
+          var fileValue = document.getElementById("fileId").value;
+          var staffValue = document.getElementById("staffId").value;
+          if(fileValue=='' && staffValue=='')
+          {
+            alert("请输入抽奖人员姓名或选择文件!");
+            return false;
+          }
+        }
+      </script>
+
+    </head>
+
+    <body >
+      <script type="text/javascript">
+
+        function check2() {
+          alert("test");
+        }
+      </script>
+
+      <h1 style="text-align:center">在线抽奖活动</h1>
+
+      <form id="form1" method="post" action="/lottery" enctype="multipart/form-data" >
+      <div id="sub1">
+        <p>请设置奖项人数:<br></p>
+        <p>一等奖: <input type="text" class="number" name="first"> 名</p>
+        <p>二等奖: <input type="text" class="number" name="second"> 名</p>
+        <p>三等奖: <input type="text" class="number" name="third"> 名</p>
+      </div>
+
+      <div id="sub2">
+        <p >请设置抽奖人员: <br></p>
+        <p >输入人名(用逗号分隔):<br><textArea name="staff" id="staffId" ></textArea></p>
+      </div>
+      <p id="file">选择文件导入: <input type="file" id = "fileId" name="uploadFiles" /><br></p>
+      <input position="relative" type="button" onclick="disp_alert()" value="submit">
+      </form>
+    </body>
+
+</html>
