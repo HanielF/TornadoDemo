@@ -292,3 +292,15 @@ Traceback (most recent call last):
   File "/home/hanielf/Learning/Tornado/chatInWeb/views/index.py", line 46, in on_message
     user.write_message(u"[%s]说:%s" % (self.request.remoteip, message))
 AttributeError: 'HTTPServerRequest' object has no attribute 'remoteip'
+ERROR:tornado.general:Could not open static file '/home/hanielf/Learning/Tornado/chatInWeb/static/js/query.min.js'
+WARNING:tornado.access:404 GET /static/js/query.min.js (::1) 2.42ms
+Traceback (most recent call last):
+  File "server.py", line 14, in <module>
+    httpServer.bind(config.options["port"])
+  File "/usr/lib/python3.6/site-packages/tornado/tcpserver.py", line 205, in bind
+    port, address=address, family=family, backlog=backlog, reuse_port=reuse_port
+  File "/usr/lib/python3.6/site-packages/tornado/netutil.py", line 174, in bind_sockets
+    sock.bind(sockaddr)
+OSError: [Errno 98] Address already in use
+ERROR:tornado.general:Could not open static file '/home/hanielf/Learning/Tornado/chatInWeb/static/js/jquery.min.js'
+WARNING:tornado.access:404 GET /static/js/jquery.min.js (::1) 2.24ms
