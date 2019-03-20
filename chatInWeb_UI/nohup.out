@@ -304,13 +304,3 @@ Traceback (most recent call last):
 OSError: [Errno 98] Address already in use
 ERROR:tornado.general:Could not open static file '/home/hanielf/Learning/Tornado/chatInWeb/static/js/jquery.min.js'
 WARNING:tornado.access:404 GET /static/js/jquery.min.js (::1) 2.24ms
-Traceback (most recent call last):
-  File "server.py", line 5, in <module>
-    import config
-  File "/home/hanielf/Learning/Tornado/chatInWeb_github/config.py", line 12
-    xsrf_cookies=True,
-                ^
-SyntaxError: invalid syntax
-WARNING:tornado.access:404 GET /home (::1) 7.00ms
-WARNING:tornado.access:404 GET /favicon.ico (::1) 1.78ms
-WARNING:tornado.access:405 GET /a/message/new (::1) 1.46ms

@@ -8,5 +8,5 @@ options = {"port": 8000}
 settings = {
     "static_path": os.path.join(BASE_DIRS, "static"),
     "template_path": os.path.join(BASE_DIRS, "templates"),
-    "debug": True,
+    "debug": True
 }
