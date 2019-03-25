@@ -6,3 +6,8 @@ Traceback (most recent call last):
   File "/usr/lib/python3.6/site-packages/tornado/netutil.py", line 174, in bind_sockets
     sock.bind(sockaddr)
 OSError: [Errno 98] Address already in use
+WARNING:tornado.access:404 GET /static/img/menu2.png (127.0.0.1) 125.14ms
+WARNING:tornado.access:404 GET /static/img/menu2.png (::1) 1.46ms
+WARNING:tornado.access:404 GET /favicon.ico (::1) 1.52ms
+WARNING:tornado.access:404 GET /static/img/menu2.png (127.0.0.1) 1.54ms
+WARNING:tornado.access:404 GET /static/img/menu2.png (127.0.0.1) 1.72ms

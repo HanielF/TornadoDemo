@@ -30,14 +30,29 @@ class HomeHandler(RequestHandler):
 
 # 在新的websocket连接之后执行open函数
 class ChatHandler(WebSocketHandler):
-    # 用于存储每个人的信息
-    users = []
+    users = set()  # 用于存储在线用户id
+    cache = []  # 聊天记录
 
     #  这个方法向客户端发送message消息，message可以使字符串或者字典(自动转为json字符串)如果binary参数为false,则message会以utf-8的编码发送,如果为true,可以发送二进制模式字节码
     def open(self):
-        self.users.append(self)
+        self.write_message(u"Welcome to the rom!")
         for user in self.users:
-            user.write_message("[%s]登录了" % (self.request.remote_ip))
+            user.write_message(u"[%s]登录了" % (self.request.remote_ip))
+        self.users.add(self)
+
+    #  更新cache
+    #  @classmethod
+    #  def update_cache(cls, chat):
+        #  cls.cache.append(chat)
+#
+    #  对在线的人进行推送
+    #  @classmethod
+    #  def send_updates(cls, chat):
+        #  for users in cls.users:
+            #  try:
+                #  users.write_message(chat)
+            #  except Exception:
+                #  return
 
     # 当websocket连接关闭后调用，客户端主动的关闭
     def on_close(self):
@@ -50,16 +65,16 @@ class ChatHandler(WebSocketHandler):
         for user in self.users:
             user.write_message(u"[%s]说:%s" % (self.request.remote_ip, message))
 
+    # 服务器关闭websocket
+    def on_close(self):
+        self.users.remove(self)
+        for u in self.users:
+            u.write_message(
+                u"[%s]-[%s]-离开聊天室" %
+                (self.request.remote_ip,
+                 datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")))
 
-#
-# 服务器关闭websocket
-#  def on_close(self):
-#  self.users.remove(self)
-#  for u in self.users:
-#  u.write_message(u"[%s]-[%s]-离开聊天室" % (self.request.remote_ip, datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")))
-#
-# 判断请求源 对于符合条件的请求源允许连接
-
+    # 判断请求源 对于符合条件的请求源允许连接
     def check_origin(self, origin):
         return True
 

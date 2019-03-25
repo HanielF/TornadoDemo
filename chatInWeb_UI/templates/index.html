@@ -20,12 +20,15 @@
     //服务器返回数据回去之后要接收数据
     //向div里面添加<p>标签
     ws.onmessage = function (e) {
-      $('#contents').append("<p>"+e.data+"</p>");
+      $('.card-body').append("<p>"+e.data+"</p>");
     }
  
     function sendMessage() {
       var message = $('#message').val();
-      ws.send(message);
+      if(message!='')
+        ws.send(message);
+      else
+        alert("发送的消息不可以为空!")
       $('#message').val("");
     }
   </script>
@@ -158,8 +161,9 @@
 							</a>
 						</li>
 						<li class="nav-item">
-              <a href="allrom">
-								<i class="la la-table"></i>
+              <!-- <a href="allrom"> -->
+              <a href="/">
+                <i class="la la-table"></i>
 								<p>所有群聊</p>
 								<!-- <span class="badge badge-count">14</span> -->
 							</a>
@@ -167,36 +171,47 @@
 					</ul>
 				</div>
 			</div>
-
+<!-- ---------------------------------------------------------------- ---------------- -->
 			<div class="main-panel">
 				<div class="content">
 					<div class="container-fluid">
-						<h4 class="page-title">Chat Rom 1</h4>
-
-						<div class="row">
-							<div class="col-md-12">
-								<div class="card">
-									<div class="card-header">
-										<h4 class="card-title">Title</h4>
-										<p class="card-category">
+<!-- ----------------------------------------------------------------------- -->
+            <div class="row" >
+              <div class="col-md-10" style="margin-right:auto;margin-left:auto">
+                <div class="card">
+                  <div class="card-header">
+                    <h4 class="card-title">Chat Rom 1</h4>
+                    <p class="card-category">
                       Description of the room 
-										</p>
-									</div>
-									<div class="card-body">
-                    <p>hello</p>
-                    <p>hello</p>
-                    <p>hello</p>
-                    <p>hello</p>
-                    <p>hello</p>
+                    </p>
+                  </div>
+                  <div class="card-body" style="text-align:center; height:300px">
+                    <!-- <p>hello</p> -->
+                  </div>
+                </div>
+              </div>
+            </div>
 
-									</div>
-								</div>
-							</div>
-						</div>
+<!-- ---------------------------------------------------------------- ---------------- -->
+            <div class="row" style="position:relative;bottom:0;">
+              <div class="col-md-8" style="margin-left:110px">
+                <div class="form-group">
+                  <textarea id="message" rows="3" cols="70" placeholder="Input your message here" class=form-control" style="resize:none;font-size:16px">
+                  </textarea>
+              <!-- <input type="text" value="" placeholder="Input your message here" class="form-control" style="height:50px"/> -->
+                </div>
+              </div>
+              <div class="col-md-2">
+                <div class="form-group has-success" style="text-align:center;margin-top:35px;margin-right:20px">
+                  <input type="button" value="Send" class="form-control" onclick="sendMessage()"/>
+                </div>
+              </div>
+            </div>
+<!-- ---------------------------------------------------------------- ---------------- -->
           </div>
         </div>
-
 			</div>
+<!-- -main-panel----------------------------------------------------- ---------------- -->
 		</div>
 	</div>
 
