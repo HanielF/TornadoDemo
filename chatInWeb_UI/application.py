@@ -9,13 +9,15 @@ class Application(tornado.web.Application):
     def __init__(self):
         # 路由
         handlers = [
-            (r'/', index.IndexHandler),
+            (r'/', index.LoginHandler),
+            (r'/index', index.IndexHandler),
+            (r'/login', index.LoginHandler),
             (r'/home', index.HomeHandler),
             (r'/chat', index.ChatHandler),
             (r'/allrom', index.AllromHandler),
             (r'/(.*)$', index.StaticFileHandler, {
-                "path": os.path.join(config.BASE_DIRS, "static/html"),
-                "default_filename": "index.html"
+                "path": os.path.join(config.BASE_DIRS, "templates"),
+                "default_filename": "login.html"
             }),
         ]
 

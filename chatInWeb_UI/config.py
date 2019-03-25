@@ -8,5 +8,7 @@ options = {"port": 8000}
 settings = {
     "static_path": os.path.join(BASE_DIRS, "static"),
     "template_path": os.path.join(BASE_DIRS, "templates"),
-    "debug": True
+    "debug": True,
+    "cookie_secret": "R7Qf5K9OQW6ibStACf2PwXuIeNZB3UvyiX4TU97aUBk=",
+    "login_url": "/login",
 }

@@ -11,3 +11,11 @@ WARNING:tornado.access:404 GET /static/img/menu2.png (::1) 1.46ms
 WARNING:tornado.access:404 GET /favicon.ico (::1) 1.52ms
 WARNING:tornado.access:404 GET /static/img/menu2.png (127.0.0.1) 1.54ms
 WARNING:tornado.access:404 GET /static/img/menu2.png (127.0.0.1) 1.72ms
+WARNING:tornado.access:404 GET /static/img/menu2.png (127.0.0.1) 2.71ms
+WARNING:tornado.access:404 GET /static/css/bootstrap.min.css.map (127.0.0.1) 0.66ms
+Traceback (most recent call last):
+  File "server.py", line 10, in <module>
+    app = Application()
+  File "/home/hanielf/Learning/Tornado/chatInWeb_UI/application.py", line 16, in __init__
+    (r'/(.*)$', index.StaticFileHandler, {
+AttributeError: module 'views.index' has no attribute 'StaticFileHandler'

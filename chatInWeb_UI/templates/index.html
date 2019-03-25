@@ -17,20 +17,46 @@
   <script type="text/javascript">
     // 建立websocket连接
     var ws = new WebSocket("ws://127.0.0.7:8000/chat");
+
+    //用于指定连接成功后的回调函数
+    ws.onopen = function(e){
+      var data = {
+        type:'reg',
+        username: document.getElementById("username").innerText,
+      };
+      ws.send(JSON.stringify(data));
+    }
+
     //服务器返回数据回去之后要接收数据
     //向div里面添加<p>标签
     ws.onmessage = function (e) {
-      $('.card-body').append("<p>"+e.data+"</p>");
+      var data = JSON.parse(e.data);
+      if(data.type=='msg'){
+        $('#msgBody').append("<p>"+data.username+" Says: "+data.message+"</p>");
+      } else if(data.type=='sys'){
+        $('#msgBody').append("<p>"+data.message+"</p>");
+      }
+      scrollToBottom();
     }
  
     function sendMessage() {
-      var message = $('#message').val();
-      if(message!='')
-        ws.send(message);
+      var data = {
+        type: "msg",  
+        username: document.getElementById("username").innerText,
+        message: $('#message').val()
+      };
+      if(data.message)
+        ws.send(JSON.stringify(data));
       else
         alert("发送的消息不可以为空!")
       $('#message').val("");
     }
+
+    function scrollToBottom() { 
+      var obj = document.getElementById("msgBody");
+      obj.scrollTop = obj.scrollHeight;
+    }
+
   </script>
 
 
@@ -91,13 +117,13 @@
 							</ul>
 						</li>
 						<li class="nav-item dropdown">
-              <a class="dropdown-toggle profile-pic" data-toggle="dropdown" href="#" aria-expanded="false"> <img src="static/img/favicon.jpg" alt="user-img" width="36" class="img-circle"><span >Hizrian</span></span> </a>
+              <a class="dropdown-toggle profile-pic" data-toggle="dropdown" href="#" aria-expanded="false"> <img src="static/img/favicon.jpg" alt="user-img" width="36" class="img-circle"><span >{{ username }}</span></span> </a>
 							<ul class="dropdown-menu dropdown-user">
 								<li>
 									<div class="user-box">
                     <div class="u-img"><img src="static/img/favicon.jpg" alt="user"></div>
 										<div class="u-text">
-											<h4>Hizrian</h4>
+                      <h4>{{ username }}</h4>
 											<p class="text-muted">hello@themekita.com</p><a href="profile.html" class="btn btn-rounded btn-danger btn-sm">View Profile</a></div>
 										</div>
 									</li>
@@ -124,8 +150,8 @@
 						</div>
 						<div class="info">
 							<a class="" data-toggle="collapse" href="#collapseExample" aria-expanded="true">
-								<span>
-									Hizrian
+								<span id="username">
+                  {{ username }}
 									<span class="caret"></span>
 								</span>
 							</a>
@@ -185,7 +211,7 @@
                       Description of the room 
                     </p>
                   </div>
-                  <div class="card-body" style="text-align:center; height:300px">
+                  <div class="card-body" id="msgBody" style="text-align:center; height:300px; overflow:scroll">
                     <!-- <p>hello</p> -->
                   </div>
                 </div>
