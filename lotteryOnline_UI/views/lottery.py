@@ -3,10 +3,12 @@ from tornado.web import RequestHandler
 import json
 import numpy as np
 
-cnts = np.zeros(3, np.int)
-plist = []
-names = []
+cnts = np.zeros(3, np.int)  # 存放一二三等奖的各自人数
+plist = []  # 存放一二三等奖概率
+names = []  # 存放所有的人
+res = []  # 除去当次中奖剩下的人,用作缓冲
 info = ""
+partSize = 5
 
 first_names = []
 second_names = []
@@ -14,12 +16,20 @@ third_names = []
 
 
 def lotteryAgain():
-    for i in range(5):
-        global info, plist, first_names, second_names, third_names, names, cnts
-        if (len(names) == 0 or cnts.sum(axis=0) == 0):
-            info = info + "已经全部抽完"
-            break
+    global info, plist, first_names, second_names, third_names, names, cnts, res, partSize
+    if len(names) == 0 or cnts.sum(axis=0) == 0:
+        info = info + "已经全部抽完"
+        return
+    if cnts.sum(axis=0) < partSize:
+        partSize = cnts.sum(axis=0)
 
+    # 中奖的候选人
+    if len(names) <= partSize:
+        candidates = names
+    else:
+        candidates = np.random.choice(len(names), partSize, replace=False)
+
+    for i in range(len(candidates)):
         # 随机抽取是几等奖
         step = np.random.choice(3, 1, p=plist)[0]
         while cnts[step] == 0:
@@ -27,12 +37,17 @@ def lotteryAgain():
 
         cnts[step] = cnts[step] - 1
         if (step == 0):
-            first_names.append(names[0])
+            first_names.append(names[candidates[i]])
         elif (step == 1):
-            second_names.append(names[0])
+            second_names.append(names[candidates[i]])
         else:
-            third_names.append(names[0])
-        del names[0]
+            third_names.append(names[candidates[i]])
+    for i in range(len(names)):
+        if i not in candidates:
+            res.append(names[i])
+    names = res
+    res = []
+
     #  info = "names:" + ",".join(names) + "first:" + ",".join(first_names) + "second:" + ",".join(second_names) + "third:" + ",".join(third_names)
 
 
