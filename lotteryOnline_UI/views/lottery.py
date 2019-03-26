@@ -25,7 +25,7 @@ def lotteryAgain():
 
     # 中奖的候选人
     if len(names) <= partSize:
-        candidates = names
+        candidates = np.arange(len(names))
     else:
         candidates = np.random.choice(len(names), partSize, replace=False)
 
@@ -42,9 +42,10 @@ def lotteryAgain():
             second_names.append(names[candidates[i]])
         else:
             third_names.append(names[candidates[i]])
-    for i in range(len(names)):
-        if i not in candidates:
-            res.append(names[i])
+
+    for j in range(len(names)):
+        if j not in candidates:
+            res.append(names[j])
     names = res
     res = []
 
@@ -83,13 +84,11 @@ class LotteryHandler(RequestHandler):
         cnt_sum = cnts.sum(axis=0)
         plist = [cnts[0] / cnt_sum, cnts[1] / cnt_sum, cnts[2] / cnt_sum]
 
-        staff = self.get_argument('staff')
-        filebody = str(
-            self.request.files["uploadFiles"][0]['body'], encoding="utf-8")
-        # 分词
-        if len(staff) != 0:
+        if not self.get_argument('staff') is None:
+            staff = self.get_argument('staff')
             names = staff.split(' ')
-        elif filebody != '':
+        elif not self.request.files["uploadFiles"][0]['body'] is None:
+            filebody = str(self.request.files["uploadFiles"][0]['body'], encoding="utf-8")
             names = filebody.split(' ')
         else:
             return
