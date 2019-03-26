@@ -16,7 +16,11 @@ class BaseHandler(RequestHandler):
 class IndexHandler(BaseHandler):
     @tornado.web.authenticated
     def get(self, *args, **kwargs):
-        self.render("index.html", username=self.get_argument("userName"))
+        self.set_secure_cookie("user", self.get_argument("userName"))
+        self.render(
+            "index.html",
+            username=self.get_argument("userName"),
+            userId=self.get_argument("passWord"))
 
 
 class AllromHandler(RequestHandler):
@@ -35,13 +39,13 @@ class HomeHandler(RequestHandler):
 
 
 class LoginHandler(BaseHandler):
-    def get(self):
+    def get(self, *args, **kwargs):
         self.render('login.html')
 
-    def post(self):
-        self.set_secure_cookie("user", self.get_argument("username"))
-        self.set_secure_cookie("passWord", self.get_argument("passWord"))
-        self.redirect("/index")
+    #  def post(self, *args, **kwargs):
+    #  self.set_secure_cookie("user", self.get_argument("userName"))
+    #  self.set_secure_cookie("passWord", self.get_argument("passWord"))
+    #  self.redirect("/index")
 
 
 class LogoutHandler(BaseHandler):
@@ -94,13 +98,14 @@ class ChatHandler(WebSocketHandler, BaseHandler):
     # 当websocket连接关闭后调用，客户端主动的关闭
     def on_close(self):
         ChatHandler.users.remove(self)
-        ChatHandler.send_updates('sys', 'SYSTEM', self.username + ' has left!')
-
-    def reg(self, username):
-        self.username = username
-        #  self.uid = ''.join(str(uuid.uuid4()).split('-'))
         ChatHandler.send_updates('sys', 'SYSTEM',
-                                 self.username + ' has joined!')
+                                 'User ' + self.username + ' has left!')
+
+    def reg(self, username, uid):
+        self.username = username
+        self.userId = uid
+        ChatHandler.send_updates('sys', 'SYSTEM',
+                                 'User ' + self.username + ' has joined!')
         if self not in ChatHandler.users:
             ChatHandler.users.add(self)
 
@@ -109,10 +114,10 @@ class ChatHandler(WebSocketHandler, BaseHandler):
         msg = json.loads(message)
         ChatHandler.update_cache(message)
         if msg["type"] == "reg":
-            self.reg(msg["username"])
+            self.reg(msg["username"], msg["userId"])
         elif msg["type"] == "msg":
             if self not in ChatHandler.users:
-                self.reg(msg["username"])
+                self.reg(msg["username"], self.userId)
             for sock in ChatHandler.users:
                 sock.write_message(message)
         else:
@@ -138,6 +143,4 @@ class ChatHandler(WebSocketHandler, BaseHandler):
 
     #  def on_message(self, message):
     #  for u in self.users:  # 向在线用户广播消息
-
-
-#  u.write_message(u"[%s]-[%s]-说：%s" % (self.request.remote_ip, datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"), message))
+    #  u.write_message(u"[%s]-[%s]-说：%s" % (self.request.remote_ip, datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"), message))

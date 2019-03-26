@@ -11,7 +11,7 @@ class Application(tornado.web.Application):
         handlers = [
             (r'/', index.LoginHandler),
             (r'/index', index.IndexHandler),
-            (r'/login', index.LoginHandler),
+            (r'/login(.*)$', index.IndexHandler),
             (r'/home', index.HomeHandler),
             (r'/chat', index.ChatHandler),
             (r'/allrom', index.AllromHandler),
