@@ -67,6 +67,7 @@ class ChatHandler(WebSocketHandler, BaseHandler):
             json.dumps({
                 'type': 'sys',
                 'username': 'SYSTEM',
+                'roomBody': u'ChatRoom1msgBody',
                 'message': u'Welcome to the Room',
             }))
         ChatHandler.push_cache(self)
@@ -84,24 +85,27 @@ class ChatHandler(WebSocketHandler, BaseHandler):
 
     #  对在线的人进行推送
     @classmethod
-    def send_updates(cls, msgtype, uname, msg):
+    def send_updates(cls, msgtype, uname, roomBody, msg):
         for sock in ChatHandler.users:
             sock.write_message(
                 json.dumps({
                     'type': msgtype,
                     'username': uname,
+                    'roomBody': roomBody,
                     'message': msg,
                 }))
 
     # 当websocket连接关闭后调用，客户端主动的关闭
     def on_close(self):
         ChatHandler.users.remove(self)
-        ChatHandler.send_updates('sys', 'SYSTEM', self.username + ' has left!')
+        ChatHandler.send_updates('sys', 'SYSTEM', self.roomBody,
+                                 self.username + ' has left!')
 
-    def reg(self, username):
+    def reg(self, username, roomBody):
         self.username = username
+        self.roomBody = roomBody
         #  self.uid = ''.join(str(uuid.uuid4()).split('-'))
-        ChatHandler.send_updates('sys', 'SYSTEM',
+        ChatHandler.send_updates('sys', 'SYSTEM', self.roomBody,
                                  self.username + ' has joined!')
         if self not in ChatHandler.users:
             ChatHandler.users.add(self)
@@ -111,10 +115,10 @@ class ChatHandler(WebSocketHandler, BaseHandler):
         msg = json.loads(message)
         ChatHandler.update_cache(message)
         if msg["type"] == "reg":
-            self.reg(msg["username"])
+            self.reg(msg["username"], msg["roomBody"])
         elif msg["type"] == "msg":
             if self not in ChatHandler.users:
-                self.reg(msg["username"])
+                self.reg(msg["username"], msg["roomBody"])
             for sock in ChatHandler.users:
                 sock.write_message(message)
         else:
