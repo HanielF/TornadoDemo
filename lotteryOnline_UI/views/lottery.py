@@ -84,14 +84,14 @@ class LotteryHandler(RequestHandler):
         cnt_sum = cnts.sum(axis=0)
         plist = [cnts[0] / cnt_sum, cnts[1] / cnt_sum, cnts[2] / cnt_sum]
 
-        if not self.get_argument('staff') is None:
+        if not self.get_argument('staff') is '':
             staff = self.get_argument('staff')
             names = staff.split(' ')
-        elif not self.request.files["uploadFiles"][0]['body'] is None:
+            #  info = info + "有输入"
+        else:
             filebody = str(self.request.files["uploadFiles"][0]['body'], encoding="utf-8")
             names = filebody.split(' ')
-        else:
-            return
+            #  info = info + "有文件"
 
         lotteryAgain()
         self.render(
