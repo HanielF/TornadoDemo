@@ -61,12 +61,28 @@
     }
 
     var roomNum = 1;
+    var myRooms = new Array();
+    myRooms[0] = "Chat Room 1";
     function addRoom() {
-      roomNum = roomNum+1;
-      $('#fadiv').appendChild("<div class='col-md-10' id=room"+roomNum+" style='margin-right:auto;margin-left:auto'><div class='card'><div class='card-header'><h4 class='card-title'>Chat Rom "+roomNum+"</h4><p class='card-category'>Description of the room</p></div><div class='card-body' id='msgBody' style='height:300px; overflow:scroll'></div></div></div>");
-      document.getElementById("room1").style.display = "none";
-      document.getElementById("room"+roomNum).style.display = "block";
+      var newName = prompt("请输入群聊名称");
+      if(newName){
+        $('#fadiv').append('<div class="col-md-10" id='+newName+' style="margin-right:auto;margin-left:auto"><div class="card"><div class="card-header"><h4 class="card-title">'+newName+'</h4><p class="card-category">Description of the room</p></div><div class="card-body" id="msgBody" style="height:300px; overflow:scroll"></div></div></div>');
+        $('#sidebarRooms').append('<li class="nav-item active"><a href="javascript:void(0)" onclick="switchRoom(\''+newName+'\')"><i class="la la-wechat"></i><p>'+newName+'</p></a></li>')
+        for(x in myRooms){
+          document.getElementById(myRooms[x]).style.display = "none";
+        }
+        document.getElementById(newName).style.display = "block";
+        myRooms[roomNum] = newName;
+        roomNum = roomNum+1;
+      }
+    }
 
+    //切换聊天室
+    function switchRoom(roomId) {
+      for(x in myRooms){
+        document.getElementById(myRooms[x]).style.display = "none";
+      }
+      document.getElementById(roomId).style.display = "block";
     }
 
 
@@ -192,13 +208,7 @@
 							</div>
 						</div>
 					</div>
-					<ul class="nav">
-						<li class="nav-item active">
-							<a href="/">
-								<i class="la la-wechat"></i>
-                <p>Chat Room</p> <p id="romNum">1</p>
-							</a>
-						</li>
+					<ul class="nav" id="sidebarRooms">
 						<li class="nav-item">
               <!-- <a href="allrom"> -->
               <a href="/">
@@ -207,9 +217,15 @@
 							</a>
 						</li>
 						<li class="nav-item">
-              <a onclick="addRoom()" >
+              <a href="javascript:void(0)" onclick="addRoom()" >
                 <i class="la la-table"></i>
 								<p>新建群聊</p>
+							</a>
+						</li>
+						<li class="nav-item active">
+							<a href="javascript:void(0)" onclick="switchRoom('Chat Room 1')">
+								<i class="la la-wechat"></i>
+                <p>Chat Room 1</p> 
 							</a>
 						</li>
 					</ul>
@@ -221,10 +237,10 @@
 					<div class="container-fluid">
 <!-- ----------------------------------------------------------------------- -->
             <div class="row" id="fadiv">
-              <div class="col-md-10" id="room1" style="margin-right:auto;margin-left:auto">
+              <div class="col-md-10" id="Chat Room 1" style="margin-right:auto;margin-left:auto">
                 <div class="card">
                   <div class="card-header">
-                    <h4 class="card-title">Chat Rom 1</h4>
+                    <h4 class="card-title">Chat Room 1</h4>
                     <p class="card-category">
                       Description of the room 
                     </p>
