@@ -15,7 +15,7 @@
 		<div class="lowin-wrapper">
 			<div class="lowin-box lowin-login">
 				<div class="lowin-box-inner">
-					<form>
+					<form >
 						<p>Sign in to continue</p>
 						<div class="lowin-group">
 							<label>Name <a href="#" class="login-back-link">Sign in?</a></label>
@@ -23,7 +23,7 @@
 						</div>
 						<div class="lowin-group password-group">
 							<label>Password <a href="#" class="forgot-link"></a></label>
-							<input type="password" name="passWord" autocomplete="current-password" class="lowin-input">
+							<input type="password" name="passWord" id = "pwd" autocomplete="current-password" class="lowin-input">
 						</div>
 						<button class="lowin-btn login-btn">
 							Sign In
@@ -46,7 +46,7 @@
 						</div>
 						<div class="lowin-group">
 							<label>Password</label>
-							<input type="password" name="password" autocomplete="current-password" class="lowin-input">
+							<input type="password" name="password" autocomplete="current-password" class="lowin-input" >
 						</div>
 						<button class="lowin-btn">
 							Sign Up
@@ -67,10 +67,11 @@
 
 	<script src="static/js/auth.js"></script>
 	<script>
-		Auth.init({
-			login_url: '/login',
-			forgot_url: '#forgot'
-		});
+    Auth.init({
+      login_url: '/login',
+      forgot_url: '#forgot'
+    });
+
 	</script>
 </body>
 </html>

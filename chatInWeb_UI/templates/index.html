@@ -47,15 +47,26 @@
         username: document.getElementById("username").innerText,
         message: $('#message').val()
       };
+
       if(data.message)
         ws.send(JSON.stringify(data));
       else
         alert("发送的消息不可以为空!")
       $('#message').val("");
     }
+
     function scrollToBottom() { 
       var obj = document.getElementById("msgBody");
       obj.scrollTop = obj.scrollHeight;
+    }
+
+    var roomNum = 1;
+    function addRoom() {
+      roomNum = roomNum+1;
+      $('#fadiv').appendChild("<div class='col-md-10' id=room"+roomNum+" style='margin-right:auto;margin-left:auto'><div class='card'><div class='card-header'><h4 class='card-title'>Chat Rom "+roomNum+"</h4><p class='card-category'>Description of the room</p></div><div class='card-body' id='msgBody' style='height:300px; overflow:scroll'></div></div></div>");
+      document.getElementById("room1").style.display = "none";
+      document.getElementById("room"+roomNum).style.display = "block";
+
     }
 
 
@@ -185,8 +196,7 @@
 						<li class="nav-item active">
 							<a href="/">
 								<i class="la la-wechat"></i>
-								<p>Chat Rom 1</p>
-								<!-- <span class="badge badge-count">5</span> -->
+                <p>Chat Room</p> <p id="romNum">1</p>
 							</a>
 						</li>
 						<li class="nav-item">
@@ -194,7 +204,12 @@
               <a href="/">
                 <i class="la la-table"></i>
 								<p>所有群聊</p>
-								<!-- <span class="badge badge-count">14</span> -->
+							</a>
+						</li>
+						<li class="nav-item">
+              <a onclick="addRoom()" >
+                <i class="la la-table"></i>
+								<p>新建群聊</p>
 							</a>
 						</li>
 					</ul>
@@ -205,8 +220,8 @@
 				<div class="content">
 					<div class="container-fluid">
 <!-- ----------------------------------------------------------------------- -->
-            <div class="row" >
-              <div class="col-md-10" style="margin-right:auto;margin-left:auto">
+            <div class="row" id="fadiv">
+              <div class="col-md-10" id="room1" style="margin-right:auto;margin-left:auto">
                 <div class="card">
                   <div class="card-header">
                     <h4 class="card-title">Chat Rom 1</h4>

@@ -39,8 +39,10 @@ class LoginHandler(BaseHandler):
         self.render('login.html')
 
     def post(self):
-        self.set_secure_cookie("user", self.get_argument("username"))
-        self.set_secure_cookie("passWord", self.get_argument("passWord"))
+        username = self.get_argument("username")
+        self.set_secure_cookie("user", username)
+        pwd = self.get_argument("passWord")
+        self.set_secure_cookie("passWord", pwd)
         self.redirect("/index")
 
 
