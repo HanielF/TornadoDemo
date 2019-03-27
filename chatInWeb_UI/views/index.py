@@ -135,6 +135,13 @@ class ChatHandler(WebSocketHandler, BaseHandler):
             self.rooms.add(msg["roomBody"])
             if msg["roomBody"] not in ChatHandler.cache.keys():
                 ChatHandler.cache[msg["roomBody"]] = []
+            self.write_message(
+                json.dumps({
+                    'type': 'sys',
+                    'username': 'SYSTEM',
+                    'roomBody': msg["roomBody"],
+                    'message': u'Welcome to the Room',
+                }))
             ChatHandler.push_cache(self, msg["roomBody"])
         else:
             print("Message Error.")

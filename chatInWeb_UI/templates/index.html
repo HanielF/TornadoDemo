@@ -76,7 +76,7 @@
     function addRoom() {
       var newName = prompt("请输入群聊名称");
       if(newName){
-        $('#fadiv').append('<div class="col-md-10" id='+newName+' style="margin-right:auto;margin-left:auto"><div class="card"><div class="card-header"><h4 class="card-title">'+newName+'</h4><p class="card-category" contenteditable="true">[可修改]Description of the room</p></div><div class="card-body" id="'+newName.replace(/\s*/g,"")+'msgBody" style="height:300px; overflow:scroll"></div></div></div>');
+        $('#fadiv').append('<div class="col-md-10" id='+newName+' style="margin-right:auto;margin-left:auto"><div class="card"><div class="card-header"><h4 class="card-title">'+newName+'</h4><p class="card-category" contenteditable="true">[可修改] Description of the room</p></div><div class="card-body" id="'+newName.replace(/\s*/g,"")+'msgBody" style="height:300px; overflow:scroll"></div></div></div>');
         $('#sidebarRooms').append('<li class="nav-item active"><a href="javascript:void(0)" onclick="switchRoom(\''+newName+'\')"><i class="la la-wechat"></i><p>'+newName+'</p></a></li>')
 
         switchRoom(newName);
