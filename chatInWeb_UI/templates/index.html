@@ -17,10 +17,16 @@
   <script type="text/javascript">
     // 建立websocket连接
     var ws = new WebSocket("ws://127.0.0.7:8000/chat");
+    var roomNum = 1;
+    var currentRoomBody = 'ChatRoom1msgBody'
+    var myRooms = new Array();
+    myRooms[0] = 'Chat Room 1';
+
     //用于指定连接成功后的回调函数
     ws.onopen = function(e){
       var data = {
         type:'reg',
+        roomBody: currentRoomBody,
         username: document.getElementById("username").innerText,
       };
       ws.send(JSON.stringify(data));
@@ -29,14 +35,19 @@
     //向div里面添加<p>标签
     ws.onmessage = function (e) {
       var data = JSON.parse(e.data);
+      var mbody = "#"+data.roomBody;
+      $('#userId').text(mbody);
+
       if(data.type=='msg'){
         if(data.username!=$('#username').text()){
-          $('#msgBody').append("<div style='text-align:left;'><p style='position:relative;left:20px;'>"+data.username+" Says: " + data.message + "</p></div>")
-        }else{
-          $('#msgBody').append("<div style='text-align:right;'><p style='position:relative;right:20px;'>"+ data.message + "</p></div>")
+          $(mbody).append("<div style='text-align:left;'><p style='position:relative;left:20px;'>"+data.username+" Says: " + data.message + "</p></div>")
         }
-      } else if(data.type=='sys'){
-          $('#msgBody').append("<div style='text-align:center;'><p style='font-weight:bold'>"+ data.message + "</p></div>")
+        else{
+          $(mbody).append("<div style='text-align:right;'><p style='position:relative;right:20px;'>"+ data.message + "</p></div>")
+        }
+      } 
+      else if(data.type=='sys'){
+          $(mbody).append("<div style='text-align:center;'><p style='font-weight:bold'>"+ data.message + "</p></div>");
       }
       scrollToBottom();
     }
@@ -44,6 +55,7 @@
     function sendMessage() {
       var data = {
         type: "msg",  
+        roomBody: currentRoomBody,
         username: document.getElementById("username").innerText,
         message: $('#message').val()
       };
@@ -56,17 +68,37 @@
     }
 
     function scrollToBottom() { 
-      var obj = document.getElementById("msgBody");
+      var obj = document.getElementById(currentRoomBody);
       obj.scrollTop = obj.scrollHeight;
     }
 
-    var roomNum = 1;
-    function addRoom() {
-      roomNum = roomNum+1;
-      $('#fadiv').appendChild("<div class='col-md-10' id=room"+roomNum+" style='margin-right:auto;margin-left:auto'><div class='card'><div class='card-header'><h4 class='card-title'>Chat Rom "+roomNum+"</h4><p class='card-category'>Description of the room</p></div><div class='card-body' id='msgBody' style='height:300px; overflow:scroll'></div></div></div>");
-      document.getElementById("room1").style.display = "none";
-      document.getElementById("room"+roomNum).style.display = "block";
 
+    function addRoom() {
+      var newName = prompt("请输入群聊名称");
+      if(newName){
+        $('#fadiv').append('<div class="col-md-10" id='+newName+' style="margin-right:auto;margin-left:auto"><div class="card"><div class="card-header"><h4 class="card-title">'+newName+'</h4><p class="card-category" contenteditable="true">[可修改] Description of the room</p></div><div class="card-body" id="'+newName.replace(/\s*/g,"")+'msgBody" style="height:300px; overflow:scroll"></div></div></div>');
+        $('#sidebarRooms').append('<li class="nav-item active"><a href="javascript:void(0)" onclick="switchRoom(\''+newName+'\')"><i class="la la-wechat"></i><p>'+newName+'</p></a></li>')
+
+        switchRoom(newName);
+        myRooms[roomNum] = newName;
+        roomNum = roomNum+1;
+
+        var data = {
+          type: "addroom",
+          roomBody: newName.replace(/\s*/g,"")+"msgBody",
+          username: document.getElementById("username").innerText,
+        };
+        ws.send(JSON.stringify(data));
+      }
+    }
+
+    //切换聊天室
+    function switchRoom(roomId) {
+      currentRoomBody = roomId.replace(/\s*/g,"")+'msgBody';
+      for(x in myRooms){
+        document.getElementById(myRooms[x]).style.display = "none";
+      }
+      document.getElementById(roomId).style.display = "block";
     }
 
 
@@ -192,24 +224,24 @@
 							</div>
 						</div>
 					</div>
-					<ul class="nav">
-						<li class="nav-item active">
-							<a href="/">
-								<i class="la la-wechat"></i>
-                <p>Chat Room</p> <p id="romNum">1</p>
-							</a>
-						</li>
+					<ul class="nav" id="sidebarRooms">
 						<li class="nav-item">
               <!-- <a href="allrom"> -->
-              <a href="/">
+              <a href="javascript:void(0)">
                 <i class="la la-table"></i>
 								<p>所有群聊</p>
 							</a>
 						</li>
 						<li class="nav-item">
-              <a onclick="addRoom()" >
+              <a href="javascript:void(0)" onclick="addRoom()" >
                 <i class="la la-table"></i>
-								<p>新建群聊</p>
+								<p>添加群聊</p>
+							</a>
+						</li>
+						<li class="nav-item active">
+							<a href="javascript:void(0)" onclick="switchRoom('Chat Room 1')">
+								<i class="la la-wechat"></i>
+                <p>Chat Room 1</p> 
 							</a>
 						</li>
 					</ul>
@@ -221,15 +253,15 @@
 					<div class="container-fluid">
 <!-- ----------------------------------------------------------------------- -->
             <div class="row" id="fadiv">
-              <div class="col-md-10" id="room1" style="margin-right:auto;margin-left:auto">
+              <div class="col-md-10" id="Chat Room 1" style="margin-right:auto;margin-left:auto">
                 <div class="card">
                   <div class="card-header">
-                    <h4 class="card-title">Chat Rom 1</h4>
+                    <h4 class="card-title">Chat Room 1</h4>
                     <p class="card-category">
-                      Description of the room 
+                      公共聊天室 
                     </p>
                   </div>
-                  <div class="card-body" id="msgBody" style="height:300px; overflow:scroll">
+                  <div class="card-body" id="ChatRoom1msgBody" style="height:300px; overflow:scroll">
                     <!-- <p>hello</p> -->
                   </div>
                 </div>
