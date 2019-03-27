@@ -36,10 +36,9 @@
     ws.onmessage = function (e) {
       var data = JSON.parse(e.data);
       var mbody = "#"+data.roomBody;
-      $('#userId').text(data.roomBody);
+      $('#userId').text(mbody);
 
       if(data.type=='msg'){
-        var content = document.getElementById(data.roomBody).innerHTML;
         if(data.username!=$('#username').text()){
           $(mbody).append("<div style='text-align:left;'><p style='position:relative;left:20px;'>"+data.username+" Says: " + data.message + "</p></div>")
         }
@@ -77,14 +76,19 @@
     function addRoom() {
       var newName = prompt("请输入群聊名称");
       if(newName){
-        $('#fadiv').append('<div class="col-md-10" id='+newName+' style="margin-right:auto;margin-left:auto"><div class="card"><div class="card-header"><h4 class="card-title">'+newName+'</h4><p class="card-category">Description of the room</p></div><div class="card-body" id="'+newName.replace(/\s*/g,"")+'msgBody" style="height:300px; overflow:scroll"></div></div></div>');
+        $('#fadiv').append('<div class="col-md-10" id='+newName+' style="margin-right:auto;margin-left:auto"><div class="card"><div class="card-header"><h4 class="card-title">'+newName+'</h4><p class="card-category" contenteditable="true">[可修改]Description of the room</p></div><div class="card-body" id="'+newName.replace(/\s*/g,"")+'msgBody" style="height:300px; overflow:scroll"></div></div></div>');
         $('#sidebarRooms').append('<li class="nav-item active"><a href="javascript:void(0)" onclick="switchRoom(\''+newName+'\')"><i class="la la-wechat"></i><p>'+newName+'</p></a></li>')
-        for(x in myRooms){
-          document.getElementById(myRooms[x]).style.display = "none";
-        }
-        document.getElementById(newName).style.display = "block";
+
+        switchRoom(newName);
         myRooms[roomNum] = newName;
         roomNum = roomNum+1;
+
+        var data = {
+          type: "addroom",
+          roomBody: newName.replace(/\s*/g,"")+"msgBody",
+          username: document.getElementById("username").innerText,
+        };
+        ws.send(JSON.stringify(data));
       }
     }
 
@@ -223,7 +227,7 @@
 					<ul class="nav" id="sidebarRooms">
 						<li class="nav-item">
               <!-- <a href="allrom"> -->
-              <a href="/">
+              <a href="javascript:void(0)">
                 <i class="la la-table"></i>
 								<p>所有群聊</p>
 							</a>
@@ -254,7 +258,7 @@
                   <div class="card-header">
                     <h4 class="card-title">Chat Room 1</h4>
                     <p class="card-category">
-                      Description of the room 
+                      公共聊天室 
                     </p>
                   </div>
                   <div class="card-body" id="ChatRoom1msgBody" style="height:300px; overflow:scroll">
