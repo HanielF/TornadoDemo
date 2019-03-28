@@ -21,7 +21,7 @@
     var currentRoomBody = 'ChatRoom1msgBody'
     var myRooms = new Array();
     myRooms[0] = 'Chat Room 1';
-
+    var currentRoomNum = 0;
     //用于指定连接成功后的回调函数
     ws.onopen = function(e){
       var data = {
@@ -37,7 +37,6 @@
       var data = JSON.parse(e.data);
       var mbody = "#"+data.roomBody;
       $('#userId').text(mbody);
-
       if(data.type=='msg'){
         if(data.username!=$('#username').text()){
           $(mbody).append("<div style='text-align:left;'><p style='position:relative;left:20px;'>"+data.username+" Says: " + data.message + "</p></div>")
@@ -59,30 +58,24 @@
         username: document.getElementById("username").innerText,
         message: $('#message').val()
       };
-
       if(data.message)
         ws.send(JSON.stringify(data));
       else
         alert("发送的消息不可以为空!")
       $('#message').val("");
     }
-
     function scrollToBottom() { 
       var obj = document.getElementById(currentRoomBody);
       obj.scrollTop = obj.scrollHeight;
     }
-
-
     function addRoom() {
       var newName = prompt("请输入群聊名称");
       if(newName){
-        $('#fadiv').append('<div class="col-md-10" id='+newName+' style="margin-right:auto;margin-left:auto"><div class="card"><div class="card-header"><h4 class="card-title">'+newName+'</h4><p class="card-category" contenteditable="true">[可修改] Description of the room</p></div><div class="card-body" id="'+newName.replace(/\s*/g,"")+'msgBody" style="height:300px; overflow:scroll"></div></div></div>');
-        $('#sidebarRooms').append('<li class="nav-item active"><a href="javascript:void(0)" onclick="switchRoom(\''+newName+'\')"><i class="la la-wechat"></i><p>'+newName+'</p></a></li>')
-
+        $('#fadiv').append('<div class="col-md-10" id='+newName+' style="margin-right:auto;margin-left:auto"><div class="card"><div class="card-header"><h4 class="card-title">'+newName+'</h4><div style="float:left"><p class="card-category">公共聊天室</p></div><div style="float:right;position:relative;top:-15px;right:10px"><button class="btn btn-danger" onclick="delroom()">退出</button></div></div><div class="card-body" id="'+newName.replace(/\s*/g,"")+'msgBody" style="height:300px; overflow-y:scroll"></div></div></div>');
+        $('#sidebarRooms').append('<li class="nav-item active" id='+newName+'Bar ><a href="javascript:void(0)" onclick="switchRoom(\''+newName+'\')"><i class="la la-wechat"></i><p>'+newName+'</p></a></li>')
         switchRoom(newName);
         myRooms[roomNum] = newName;
         roomNum = roomNum+1;
-
         var data = {
           type: "addroom",
           roomBody: newName.replace(/\s*/g,"")+"msgBody",
@@ -94,6 +87,11 @@
 
     //切换聊天室
     function switchRoom(roomId) {
+      for(var i=0;i<myRooms.length;i++){
+        if(myRooms[i]==roomId){
+          currentRoomNum=i;
+        }
+      }
       currentRoomBody = roomId.replace(/\s*/g,"")+'msgBody';
       for(x in myRooms){
         document.getElementById(myRooms[x]).style.display = "none";
@@ -101,6 +99,36 @@
       document.getElementById(roomId).style.display = "block";
     }
 
+//    //退出当前聊天室
+//    function delroom() {
+//      var targetRoomId = myRooms[currentRoomId];
+//      var target = document.getElementById(targetRoomId);
+//      var targetBar = document.getElementById(targetRoomId+"Bar");
+//      //删除页面元素
+//      target.parentNode.removeChild(target);
+//      targetBar.parentNode.removeChild(targetBar);
+//
+//      //修改myRooms数组
+//      for(var i=0;i<myRooms.length;i++){
+//        if(myRooms[i]==targetRoomId){
+//          if(i!=0){ //删除的不是公共聊天室
+//            switchRoom(myRooms[i-1]);
+//            currentRoomBody=myRooms[i-1].replace(/\s*/g,"")+'msgBody';
+//            currentRoomId=i-1;
+//          }else if(i==0 && myRooms.length>1){//删除的是公共聊天室并且还有其他聊天室存在
+//            switchRoom(myRooms[1]);
+//            currentRoomBody=myRooms[1].replace(/\s*/g,"")+'msgBody';
+//            currentRoomId=1;
+//          }else if(i==0 && myRooms.length=1){//删除的是公共聊天室并且没有其他聊天室供显示了
+//            document.getElementById("footerArea").style.display="none";
+//            currentRoomBody="";
+//            currentRoomId=-1;
+//          }
+//          myRooms.splice(i,1);
+//          break;
+//        }
+//      }
+//    }
 
   </script>
 
@@ -238,7 +266,7 @@
 								<p>添加群聊</p>
 							</a>
 						</li>
-						<li class="nav-item active">
+						<li class="nav-item active" id="Chat Room 1Bar">
 							<a href="javascript:void(0)" onclick="switchRoom('Chat Room 1')">
 								<i class="la la-wechat"></i>
                 <p>Chat Room 1</p> 
@@ -257,11 +285,16 @@
                 <div class="card">
                   <div class="card-header">
                     <h4 class="card-title">Chat Room 1</h4>
-                    <p class="card-category">
-                      公共聊天室 
-                    </p>
+                    <div style="float:left">
+                      <p class="card-category">
+                        公共聊天室 
+                      </p>
+                    </div>
+                    <div style="float:right;position:relative;top:-15px;right:10px">
+                      <button class="btn btn-danger" onclick="delroom()">退出</button>
+                    </div>
                   </div>
-                  <div class="card-body" id="ChatRoom1msgBody" style="height:300px; overflow:scroll">
+                  <div class="card-body" id="ChatRoom1msgBody" style="height:300px; overflow-y:scroll">
                     <!-- <p>hello</p> -->
                   </div>
                 </div>
@@ -293,7 +326,6 @@
   <script type="text/javascript">
     var id = genUid();
     $("#userId").text(id);
-
     function genUid(){
       var uid = "";
       for(var i=0;i<6;i++)
@@ -301,7 +333,6 @@
       return uid
       }
   </script>
-
 </body>
 <script src="static/js/core/jquery.3.2.1.min.js"></script>
 <script src="static/js/plugin/jquery-ui-1.12.1.custom/jquery-ui.min.js"></script>
