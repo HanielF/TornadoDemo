@@ -20,8 +20,8 @@
     var roomNum = 1;
     var currentRoomBody = 'ChatRoom1msgBody'
     var myRooms = new Array();
-    myRooms[0] = 'Chat Room 1';
-
+    myRooms[0] = 'ChatRoom1';
+    var currentRoomNum = 0;
     //用于指定连接成功后的回调函数
     ws.onopen = function(e){
       var data = {
@@ -36,8 +36,7 @@
     ws.onmessage = function (e) {
       var data = JSON.parse(e.data);
       var mbody = "#"+data.roomBody;
-      $('#userId').text(mbody);
-
+      //$("#userId").text(currentRoomNum+currentRoomBody+roomNum);
       if(data.type=='msg'){
         if(data.username!=$('#username').text()){
           $(mbody).append("<div style='text-align:left;'><p style='position:relative;left:20px;'>"+data.username+" Says: " + data.message + "</p></div>")
@@ -59,48 +58,84 @@
         username: document.getElementById("username").innerText,
         message: $('#message').val()
       };
-
       if(data.message)
         ws.send(JSON.stringify(data));
       else
         alert("发送的消息不可以为空!")
       $('#message').val("");
     }
-
     function scrollToBottom() { 
       var obj = document.getElementById(currentRoomBody);
       obj.scrollTop = obj.scrollHeight;
     }
-
-
     function addRoom() {
-      var newName = prompt("请输入群聊名称");
+      var Name = prompt("请输入群聊名称");
+      var newName = Name.replace(/\s*/g,"");//去掉空格
       if(newName){
-        $('#fadiv').append('<div class="col-md-10" id='+newName+' style="margin-right:auto;margin-left:auto"><div class="card"><div class="card-header"><h4 class="card-title">'+newName+'</h4><p class="card-category" contenteditable="true">[可修改] Description of the room</p></div><div class="card-body" id="'+newName.replace(/\s*/g,"")+'msgBody" style="height:300px; overflow:scroll"></div></div></div>');
-        $('#sidebarRooms').append('<li class="nav-item active"><a href="javascript:void(0)" onclick="switchRoom(\''+newName+'\')"><i class="la la-wechat"></i><p>'+newName+'</p></a></li>')
-
-        switchRoom(newName);
+        $('#fadiv').append('<div class="col-md-10" id='+newName+' style="margin-right:auto;margin-left:auto"><div class="card"><div class="card-header"><h4 class="card-title">'+Name+'</h4><div style="float:left"><p class="card-category">公共聊天室</p></div><div style="float:right;position:relative;top:-15px;right:10px"><button class="btn btn-danger" onclick="delroom()">退出</button></div></div><div class="card-body" id="'+newName.replace(/\s*/g,"")+'msgBody" style="height:300px; overflow-y:scroll"></div></div></div>');
+        $('#sidebarRooms').append('<li class="nav-item active" id='+newName+'Bar ><a href="javascript:void(0)" onclick="switchRoom(\''+newName+'\')"><i class="la la-wechat"></i><p>'+Name+'</p></a></li>')
         myRooms[roomNum] = newName;
         roomNum = roomNum+1;
-
         var data = {
           type: "addroom",
           roomBody: newName.replace(/\s*/g,"")+"msgBody",
           username: document.getElementById("username").innerText,
         };
         ws.send(JSON.stringify(data));
+        if(currentRoomNum == -1){//说明当前没有聊天室
+          //重新设置为空好点，设置为block会让后面的空间换行
+          document.getElementById("footerArea").style.display=""; 
+        }
+        switchRoom(newName);
       }
     }
 
     //切换聊天室
     function switchRoom(roomId) {
+      for(var i=0;i<myRooms.length;i++){
+        if(myRooms[i]==roomId){
+          currentRoomNum=i;
+        }
+      }
       currentRoomBody = roomId.replace(/\s*/g,"")+'msgBody';
-      for(x in myRooms){
+      for(var x=0;x<myRooms.length;x++){
         document.getElementById(myRooms[x]).style.display = "none";
       }
       document.getElementById(roomId).style.display = "block";
     }
 
+    //退出当前聊天室
+    function delroom() {
+      var targetRoomId = myRooms[currentRoomNum];
+      var targetRoom = document.getElementById(targetRoomId);  
+      var targetBar = document.getElementById(targetRoomId+"Bar");
+      //删除页面元素
+      targetRoom.parentNode.removeChild(targetRoom);
+      targetBar.parentNode.removeChild(targetBar);
+
+      //修改myRooms数组和其他聊天室显示
+      if(currentRoomNum!=0){ //删除的不是公共聊天室
+        //!!!这里不可以用switchRoom,因为switchRoom中修改了currentRoomBody和currentRoomNum，后面再次修改会导致myRooms.splice()的调用下标出错
+        document.getElementById(myRooms[currentRoomNum-1]).style.display="block";
+        currentRoomBody=myRooms[currentRoomNum-1].replace(/\s*/g,"")+'msgBody';
+        myRooms.splice(currentRoomNum,1)
+        currentRoomNum=currentRoomNum-1;
+      }
+      else if(currentRoomNum==0 && roomNum>1){//删除的是公共聊天室并且还有其他聊天室存在
+        document.getElementById(myRooms[1]).style.display="block";
+        currentRoomBody=myRooms[1].replace(/\s*/g,"")+'msgBody';
+        myRooms.splice(0,1);
+        currentRoomNum=0;
+      }
+      else if(currentRoomNum==0 && roomNum==1){//删除的是公共聊天室并且没有其他聊天室供显示了
+        document.getElementById("footerArea").style.display="none";
+        currentRoomBody="ChatRoom1msgBody";
+        currentRoomNum=-1;
+        myRooms.splice(0,1);
+      }
+      roomNum = roomNum-1;
+      //$("#userId").text(currentRoomNum+currentRoomBody+roomNum);
+     }
 
   </script>
 
@@ -238,8 +273,8 @@
 								<p>添加群聊</p>
 							</a>
 						</li>
-						<li class="nav-item active">
-							<a href="javascript:void(0)" onclick="switchRoom('Chat Room 1')">
+						<li class="nav-item active" id="ChatRoom1Bar">
+							<a href="javascript:void(0)" onclick="switchRoom('ChatRoom1')">
 								<i class="la la-wechat"></i>
                 <p>Chat Room 1</p> 
 							</a>
@@ -247,21 +282,26 @@
 					</ul>
 				</div>
 			</div>
-<!-- ---------------------------------------------------------------- ---------------- -->
+<!-- --------------------------------------------------------------- ---------------- -->
 			<div class="main-panel">
 				<div class="content">
 					<div class="container-fluid">
 <!-- ----------------------------------------------------------------------- -->
             <div class="row" id="fadiv">
-              <div class="col-md-10" id="Chat Room 1" style="margin-right:auto;margin-left:auto">
+              <div class="col-md-10" id="ChatRoom1" style="margin-right:auto;margin-left:auto">
                 <div class="card">
                   <div class="card-header">
                     <h4 class="card-title">Chat Room 1</h4>
-                    <p class="card-category">
-                      公共聊天室 
-                    </p>
+                    <div style="float:left">
+                      <p class="card-category">
+                        公共聊天室 
+                      </p>
+                    </div>
+                    <div style="float:right;position:relative;top:-15px;right:10px">
+                      <button class="btn btn-danger" onclick="delroom()" >退出</button>
+                    </div>
                   </div>
-                  <div class="card-body" id="ChatRoom1msgBody" style="height:300px; overflow:scroll">
+                  <div class="card-body" id="ChatRoom1msgBody" style="height:300px; overflow-y:scroll">
                     <!-- <p>hello</p> -->
                   </div>
                 </div>
@@ -269,16 +309,16 @@
             </div>
 
 <!-- ---------------------------------------------------------------- ---------------- -->
-            <div class="row" style="position:relative;bottom:0;">
-              <div class="col-md-8" style="margin-left:110px">
+            <div class="row" style="position:relative;bottom:0;" id="footerArea">
+              <div class="col-md-8" style="margin-left:110px;float:left;">
                 <div class="form-group">
                   <textarea id="message" rows="3" cols="70" placeholder="Input your message here" class=form-control" style="resize:none;font-size:16px">
                   </textarea>
               <!-- <input type="text" value="" placeholder="Input your message here" class="form-control" style="height:50px"/> -->
                 </div>
               </div>
-              <div class="col-md-2">
-                <div class="form-group has-success" style="text-align:center;margin-top:35px;margin-right:20px">
+              <div class="col-md-2" style="float:right;">
+                <div class="form-group has-success" style="text-align:center;position:relative;top:35px;right:20px">
                   <input type="button" value="Send" class="form-control" onclick="sendMessage()"/>
                 </div>
               </div>
@@ -293,7 +333,6 @@
   <script type="text/javascript">
     var id = genUid();
     $("#userId").text(id);
-
     function genUid(){
       var uid = "";
       for(var i=0;i<6;i++)
@@ -301,7 +340,6 @@
       return uid
       }
   </script>
-
 </body>
 <script src="static/js/core/jquery.3.2.1.min.js"></script>
 <script src="static/js/plugin/jquery-ui-1.12.1.custom/jquery-ui.min.js"></script>
