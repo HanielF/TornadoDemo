@@ -5,6 +5,7 @@ import os
 import json
 import uuid
 import datetime
+import time
 
 
 # 视图类
@@ -62,6 +63,7 @@ class ChatHandler(WebSocketHandler, BaseHandler):
     cache = {
         'ChatRoom1msgBody': [],
     }  # 聊天记录
+    usersTime = {}
 
     #  这个方法向客户端发送message消息，message可以使字符串或者字典(自动转为json字符串)如果binary参数为false,则message会以utf-8的编码发送,如果为true,可以发送二进制模式字节码
     def open(self):
@@ -72,20 +74,28 @@ class ChatHandler(WebSocketHandler, BaseHandler):
                 'roomBody': u'ChatRoom1msgBody',
                 'message': u'Welcome to the Room',
             }))
-        ChatHandler.push_cache(self, 'ChatRoom1msgBody')
 
-    #  更新cache
+    # 更新cache
     @classmethod
-    def update_cache(cls, msg):
-        msg = json.loads(msg)
+    def update_cache(cls, mess):
+        msg = json.loads(mess)
         room = msg["roomBody"]
-        cls.cache[room].append(msg)
+        cls.cache[room].append(mess)
 
     # 缓存的消息进行推送
     @classmethod
-    def push_cache(cls, sock, room):
-        for i in ChatHandler.cache[room]:
-            sock.write_message(i)
+    def push_cache(cls, sock, roomBody):
+        i = 0
+        length = len(ChatHandler.cache[roomBody])
+        for t in ChatHandler.usersTime[sock.username]:
+            while i < length:
+                tmpMsg = json.loads(ChatHandler.cache[roomBody][i])
+                if tmpMsg["mtime"] >= t[1]:
+                    break
+                if tmpMsg["mtime"] >= t[0] and tmpMsg["mtime"] < t[1]:
+                    tmpMsg["mtime"] = time.strftime("[%H:%M:%S]", time.localtime(tmpMsg["mtime"]))
+                    sock.write_message(json.dumps(tmpMsg))
+                i = i + 1
 
     #  对在线的人进行推送
     @classmethod
@@ -103,14 +113,24 @@ class ChatHandler(WebSocketHandler, BaseHandler):
 
     # 当websocket连接关闭后调用，客户端主动的关闭
     def on_close(self):
+        self.onlineTime.append(int(time.time()))
+        ChatHandler.usersTime[self.username].append(
+            self.onlineTime)  # 将用户的在线时间加入用户的在线时间表
         ChatHandler.users.remove(self)
         ChatHandler.send_updates('sys', 'SYSTEM', self.rooms,
                                  self.username + ' has left!')
+        print(ChatHandler.usersTime)
 
     def reg(self, username, roomBody):
         self.username = username
+        self.onlineTime = []
+        self.onlineTime.append(int(time.time()))
+        if username not in ChatHandler.usersTime.keys():
+            ChatHandler.usersTime[username] = []
+
         self.rooms = set()
         self.rooms.add(roomBody)
+
         # 如果不存在这个聊天室则添加
         if roomBody not in ChatHandler.cache.keys():
             ChatHandler.cache[roomBody] = []
@@ -119,10 +139,13 @@ class ChatHandler(WebSocketHandler, BaseHandler):
                                  self.username + ' has joined!')
         if self not in ChatHandler.users:
             ChatHandler.users.add(self)
+        ChatHandler.push_cache(self, 'ChatRoom1msgBody')
 
     #  当客户端发送消息过来时调用
     def on_message(self, message):
         msg = json.loads(message)
+        msg["mtime"] = int(time.time())
+        tmpMsg = json.dumps(msg)
         print(msg)
         if msg["type"] == "reg":
             self.reg(msg["username"], msg["roomBody"])
@@ -130,7 +153,9 @@ class ChatHandler(WebSocketHandler, BaseHandler):
             if self not in ChatHandler.users:
                 self.reg(msg["username"], msg["roomBody"])
             for sock in ChatHandler.users:
-                sock.write_message(message)
+                revTimeMsg = json.loads(tmpMsg)
+                revTimeMsg["mtime"] = time.strftime("[%H:%M:%S]", time.localtime(msg["mtime"]))
+                sock.write_message(json.dumps(revTimeMsg))
         elif msg["type"] == "addroom":
             self.rooms.add(msg["roomBody"])
             if msg["roomBody"] not in ChatHandler.cache.keys():
@@ -145,7 +170,7 @@ class ChatHandler(WebSocketHandler, BaseHandler):
             ChatHandler.push_cache(self, msg["roomBody"])
         else:
             print("Message Error.")
-        ChatHandler.update_cache(message)
+        ChatHandler.update_cache(tmpMsg)
 
     # 判断请求源 对于符合条件的请求源允许连接
     def check_origin(self, origin):
