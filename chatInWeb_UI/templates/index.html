@@ -39,7 +39,7 @@
       //$("#userId").text(currentRoomNum+currentRoomBody+roomNum);
       if(data.type=='msg'){
         if(data.username!=$('#username').text()){
-          $(mbody).append("<div style='text-align:left;'><p style='position:relative;left:20px;'>"+data.username+" Says: " + data.message + "</p></div>")
+          $(mbody).append("<div style='text-align:left;'><p style='position:relative;left:20px;'>"+data.mtime+" "+data.username+" Says: " + data.message + "</p></div>")
         }
         else{
           $(mbody).append("<div style='text-align:right;'><p style='position:relative;right:20px;'>"+ data.message + "</p></div>")
