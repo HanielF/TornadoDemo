@@ -59,7 +59,7 @@ class LogoutHandler(BaseHandler):
 
 # 在新的websocket连接之后执行open函数
 class ChatHandler(WebSocketHandler, BaseHandler):
-    users = set()  # 用于存储在线用户id
+    users = set()  # 用于存储在线用户
     cache = {
         'ChatRoom1msgBody': [],
     }  # 聊天记录
@@ -93,7 +93,8 @@ class ChatHandler(WebSocketHandler, BaseHandler):
                 if tmpMsg["mtime"] >= t[1]:
                     break
                 if tmpMsg["mtime"] >= t[0] and tmpMsg["mtime"] < t[1]:
-                    tmpMsg["mtime"] = time.strftime("[%H:%M:%S]", time.localtime(tmpMsg["mtime"]))
+                    tmpMsg["mtime"] = time.strftime(
+                        "[%H:%M:%S]", time.localtime(tmpMsg["mtime"]))
                     sock.write_message(json.dumps(tmpMsg))
                 i = i + 1
 
@@ -154,7 +155,8 @@ class ChatHandler(WebSocketHandler, BaseHandler):
                 self.reg(msg["username"], msg["roomBody"])
             for sock in ChatHandler.users:
                 revTimeMsg = json.loads(tmpMsg)
-                revTimeMsg["mtime"] = time.strftime("[%H:%M:%S]", time.localtime(msg["mtime"]))
+                revTimeMsg["mtime"] = time.strftime(
+                    "[%H:%M:%S]", time.localtime(msg["mtime"]))
                 sock.write_message(json.dumps(revTimeMsg))
         elif msg["type"] == "addroom":
             self.rooms.add(msg["roomBody"])
@@ -168,6 +170,9 @@ class ChatHandler(WebSocketHandler, BaseHandler):
                     'message': u'Welcome to the Room',
                 }))
             ChatHandler.push_cache(self, msg["roomBody"])
+            ChatHandler.send_updates('sys', 'SYSTEM', [
+                msg["roomBody"],
+            ], self.username + ' has joined!')
         else:
             print("Message Error.")
         ChatHandler.update_cache(tmpMsg)

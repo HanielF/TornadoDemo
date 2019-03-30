@@ -72,7 +72,7 @@
       var Name = prompt("请输入群聊名称");
       var newName = Name.replace(/\s*/g,"");//去掉空格
       if(newName){
-        $('#fadiv').append('<div class="col-md-10" id='+newName+' style="margin-right:auto;margin-left:auto"><div class="card"><div class="card-header"><h4 class="card-title">'+Name+'</h4><div style="float:left"><p class="card-category">公共聊天室</p></div><div style="float:right;position:relative;top:-15px;right:10px"><button class="btn btn-danger" onclick="delroom()">退出</button></div></div><div class="card-body" id="'+newName.replace(/\s*/g,"")+'msgBody" style="height:300px; overflow-y:scroll"></div></div></div>');
+        $('#fadiv').append('<div class="col-md-10" id='+newName+' style="margin-right:auto;margin-left:auto"><div class="card"><div class="card-header"><h4 class="card-title">'+Name+'</h4><div style="float:left"><p class="card-category">Description of the Room</p></div><div style="float:right;position:relative;top:-15px;right:10px"><button class="btn btn-danger" onclick="delroom()">退出</button></div></div><div class="card-body" id="'+newName.replace(/\s*/g,"")+'msgBody" style="height:300px; overflow-y:scroll"></div></div></div>');
         $('#sidebarRooms').append('<li class="nav-item active" id='+newName+'Bar ><a href="javascript:void(0)" onclick="switchRoom(\''+newName+'\')"><i class="la la-wechat"></i><p>'+Name+'</p></a></li>')
         myRooms[roomNum] = newName;
         roomNum = roomNum+1;
@@ -156,7 +156,7 @@
 				<div class="container-fluid">
 					<form class="navbar-left navbar-form nav-search mr-md-3" action="">
 						<div class="input-group">
-							<input type="text" placeholder="Search ..." class="form-control">
+							<input type="text" placeholder="Search ..." class="form-control" autocomplete="off">
 							<div class="input-group-append">
 								<span class="input-group-text">
 									<i class="la la-search search-icon"></i>
