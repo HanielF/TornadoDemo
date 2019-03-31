@@ -15,7 +15,6 @@ class BaseHandler(RequestHandler):
 
 
 class IndexHandler(BaseHandler):
-    @tornado.web.authenticated
     def get(self, *args, **kwargs):
         self.render("index.html", username=self.get_argument("userName"))
 
