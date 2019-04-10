@@ -2,7 +2,15 @@
 用Tornado做的一些项目练习，有的比较完整，是一整个项目，有的比较零星，只是在练习某些用法。
 
 项目名后加了UI的，都是对原本的同名项目进行了完善和美化，相反，原本的项目会比较简陋，只是初期的版本。
-[TOC]
+
+## 目录
+* [chatInWeb_UI](## chatInWeb_UI)
+* [handwrittenDigitRecognition](## handwrittenDigitRecognition)
+* [lotteryOnline_UI](## lotteryOnline_UI)
+* [AsyncPractice](## AsyncPractice)
+* [poemMakerPro](## poemMakerPro)
+* [h5Practice](## h5Practice)
+* [template_project](## template_project)
 
 ## chatInWeb_UI
 **在线多人聊天系统**，数据不进数据库，记录在内存，HTML+CSS+JS+Tornado+Websocket
@@ -36,12 +44,13 @@ HTML+CSS+JS+Canvas+Tornado+Websocket+Tensorflow+LeNet-5模型
 
 ## AsyncPractice
 **同步异步的练习**，主要是熟悉Tornado异步的原理和三种实现方法
+具体可以看我的博客[Python中的异步](https://catchdream.me/2019/03/17/Python%E4%B8%AD%E7%9A%84%E5%BC%82%E6%AD%A5/)和[Tornado中的异步](https://catchdream.me/2019/03/17/Tornado%E4%B8%AD%E7%9A%84%E5%BC%82%E6%AD%A5/)
 
 ## poemMakerPro
 **Tornado中文文档中的练习**，主要涉及表单上传和变量的使用
 
 ## h5Practice
-**结合H5的小练习**
+**结合H5的小练习**，内容并不多
 
 ## template_project
 **每次做项目的模板**，如果是Tornado的相关项目，可以直接download后修改路由和config端口
