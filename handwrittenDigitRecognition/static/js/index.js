@@ -1,8 +1,10 @@
 var canvas = document.getElementById('canvas');
 var outForm = document.getElementById("outForm");
 var ctx = canvas.getContext('2d');
-var oldx = 0;
-var oldy = 0;
+var oldx = 0; //起始点x
+var oldy = 0; //起始点y
+var midx = 0; //中点x
+var midy = 0; //中点y
 var onoff = false;
 
 var outCanvas = document.getElementById("outCanvas");
@@ -50,40 +52,23 @@ if (system.win || system.mac || system.linux) {
   canvas.addEventListener('mousemove', draw, false); //鼠标移动
   canvas.addEventListener('mouseup', up, false);     //鼠标弹起取消画图
   var gen_bt = document.getElementById('gen_bt');
-  // gen_bt.addEventListener('click',toImg,false)
 } else if (system.android || system.iphone) {
   window.onload = mobLoad();
 }
 
 function mobLoad() {
   canvas.addEventListener('touchstart',
-                          function(event) {
-                            //触摸点按下事件
-                            if (event.targetTouches.length == 1) {
-                              var touch = event.targetTouches[0];
-                              ctx.beginPath();
-                              ctx.moveTo(touch.clientX - canvas.offsetLeft,
-                                         touch.clientY - canvas.offsetTop);
-                              canvas.addEventListener(
-                                  'touchmove',
-                                  function(event) {
-                                    //手机拖动触摸点事件
-                                    var touche = event.targetTouches[0];
-                                    ctx.lineTo(
-                                        touche.clientX - canvas.offsetLeft,
-                                        touche.clientY - canvas.offsetTop);
-                                    ctx.stroke();
-                                  },
-                                  false);
-                              canvas.addEventListener('touchend',
-                                                      function(event) {
-                                                        //手机离开屏幕的事件
-                                                        ctx.closePath();
-                                                      },
-                                                      false);
-                            }
-                          },
-                          false);
+     function(event) {
+       //触摸点按下事件
+       if (event.targetTouches.length == 1) {
+         var touch = event.targetTouches[0];
+         oldx = touch.clientX - canvas.offsetLeft;
+         oldy = touch.clientY - canvas.offsetTop;
+         canvas.addEventListener('touchmove',tMove,false);
+         canvas.addEventListener('touchend',tEnd,false);
+       }
+     },
+     false);
 }
 
 function getViewPort() {
@@ -140,25 +125,60 @@ function up() { onoff = false; }
 
 function draw(event) {
   if (onoff == true) {
+    //获取新点和中点
     var newx = event.clientX - canvas.offsetLeft;
     var newy = event.clientY - canvas.offsetTop;
+    midx = 0.5*(newx+oldx);
+    midy = 0.5*(newy+oldy);
+
+    //设置粗细和颜色
     ctx.lineWidth = linew;
     ctx.strokeStyle = linecolor;
     ctx.lineCap = 'round';
-    ctx.beginPath();
-    ctx.moveTo(oldx, oldy);
-    ctx.lineTo(newx, newy);
+
+    //绘制二次贝塞尔
+    ctx.moveTo(oldx,oldy);
+    ctx.quadraticCurveTo( midx , midy , newx , newy );
     ctx.stroke();
+
+    //转移新旧坐标
     oldx = newx;
     oldy = newy;
   };
 }
 
 function clearCanvas() {
-  ctx.clearRect(0, 0, canvas.clientWidth, canvas.clientHeight);
+  // ctx.clearRect(0, 0, canvas.clientWidth, canvas.clientHeight);
   ctx.fillStyle = "white";
+  ctx.beginPath();
   ctx.fillRect(0, 0, canvas.offsetWidth, canvas.offsetHeight);
-  outCtx.clearRect(0, 0, outCanvas.clientWidth, outCanvas.clientHeight);
+  ctx.closePath();
+
+  // outCtx.clearRect(0, 0, outCanvas.clientWidth, outCanvas.clientHeight);
   outCtx.fillStyle = "white";
+  outCtx.beginPath();
   outCtx.fillRect(0, 0, outCanvas.offsetWidth, outCanvas.offsetHeight);
+  outCtx.closePath();
+}
+
+function tMove(event){
+  //获取新点和中点
+  var touche = event.targetTouches[0];
+  var newx = touche.clientX - canvas.offsetLeft;
+  var newy = touche.clientY - canvas.offsetTop;
+  midx = 0.5*(newx+oldx);
+  midy = 0.5*(newy+oldy);
+
+  ctx.beginPath();
+  ctx.moveTo(oldx,oldy);
+  ctx.quadraticCurveTo(midx,midy,newx,newy);
+  ctx.stroke();
+
+  oldx = newx;
+  oldy = newy;
+}
+
+function tEnd(event) {
+  //手机离开屏幕的事件
+  ctx.closePath();
 }
