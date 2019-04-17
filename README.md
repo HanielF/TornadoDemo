@@ -22,18 +22,18 @@
 **每次做项目的模板**，如果是Tornado的相关项目，可以直接download后修改路由和config端口
 
 ### 目录结构
-> ├── application.py            //路由配置文件
-> ├── config.py                 //tornado配置文件
-> ├── server.py                 //server服务器
-> ├── static                    //静态文件
-> │   ├── css                   //CSS样式文件目录
-> │   ├── html                  //HTML文件目录
-> │   └── js                    //JavaScript文件目录
-> │       └── jquery.min.js
-> ├── templates                 //模板文件目录
-> ├── upfiles
-> └── views                     //视图文件目录，各个Handler写在这里面
->      └── index.py
+> ├── application.py            //路由配置文件    
+> ├── config.py                 //tornado配置文件    
+> ├── server.py                 //server服务器    
+> ├── static                    //静态文件    
+> │   ├── css                   //CSS样式文件目录    
+> │   ├── html                  //HTML文件目录    
+> │   └── js                    //JavaScript文件目录    
+> │       └── jquery.min.js    
+> ├── templates                 //模板文件目录    
+> ├── upfiles    
+> └── views                     //视图文件目录，各个Handler写在这里面    
+>      └── index.py    
 
 static目录下的js/, css/, html/, images，这几个目录按需求自己创建
 
