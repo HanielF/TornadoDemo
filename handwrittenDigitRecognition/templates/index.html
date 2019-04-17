@@ -5,52 +5,20 @@
         <meta charset="UTF-8" name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
         <title>手写数字识别</title>
     </head>
-	<style>
-		body {
-			margin:0;
-			padding:0;
-			text-align: center;
-		}
-		#outForm {
-      width: 800px;
-			height: 45px;
-			border:1px solid black;
-			line-height: 40px;
-			margin:0 auto;
-		}
-		input {
-			margin-left: 15px;
-			color:white;
-		}
-
-		#black{background-color: black;}
-		.btn {color:black; background-color: #eee;}
-	</style>
+     <link rel="stylesheet" href="static/css/index.css" type="text/css" />
 
     <body>
         <div id="topdiv" style="width:100%; height:70px; overflow:hidden;">
         <h2>手写数字识别系统</h2>
         </div>
 
-        <div style="width:1100px;height:512px;margin:auto;overflow:hidden;border:1px solid black">
-          <div style="width:512px;height:512px;float:left;border:1px solid black">
-              <canvas id="canvas" width="512px" height="512px"></canvas>
-          </div>
-          <div style="width:512px; height:512px;float:right;position:relative;border:1px solid black">
-            <canvas id="outCanvas" width="512px" height="512px"></canvas>
-          </div>
-        </div>
-
-        <div style="width:1100px;margin:15px auto 0px auto;overflow:hidden">
-          <label style="width:512px;text-align:center;float:left;font-size:20px">手写区域: 512*512</label>
-          <label id="res" style="width:512px;text-align:center;float:right;font-size:20px">预测结果</label>
-        </div>
+        <canvas id="canvas" width="512px" height="512px"></canvas>
 
         <br />
         <div id="outForm">
             <form >
             粗细选择：
-                <select name="size" id="size">
+                <select class="sel" name="size" id="size" width="55px">
                     <option value="15">15</option>
                     <option value="17">17</option>
                     <option value="19">19</option>
@@ -58,23 +26,29 @@
                     <option value="23">23</option>
                     <option value="25">25</option>
                 </select>
-            大小选择:
-                <select id="pixelSize">
+            &nbsp;&nbsp;&nbsp;&nbsp;
+            生成大小:
+                <select class="sel" id="pixelSize"width="75px">
+                    <option value="28">28*28</option>
                     <option value="32">32*32</option>
                     <option value="64">64*64</option>
                     <option value="128">128*128</option>
                     <option value="256">256*256</option>
                     <option value="512">512*512</option>
                 </select>
-                <input type="button" class="btn" id="gen_bt" value="生成图片" onclick="genImg()">
-                <input type="button" class="btn" id="clear_bt" value="清除画布" onclick="clearCanvas()">
-                <input type="button" class="btn" id="predict_bt" value="识别" onclick="predictNum()">
+                <br />
+                <input type="button" class="btn" id="clear_bt" value="清除" onclick="clearCanvas()">
+                &nbsp;&nbsp;
+                <input type="button" class="btn" id="predict_bt" value="识别" onclick="recognizeNum()">
+                <br />
+                <input type="text" class="hint" id="hint" value="结果:">
+                &nbsp;&nbsp;
+                <input type="button" id="result_bt"  value="_____">
             </form>
         </div>
 
     </body>
 
 <script src="{{static_url('js/index.js')}}"></script>
-<script src="{{static_url('js/predictNum.js')}}"></script>
 </html>
 

@@ -1,18 +1,23 @@
+//========================主页canavs相关的JS======================
+//========================自定义变量==============================
 var canvas = document.getElementById('canvas');
 var outForm = document.getElementById("outForm");
 var ctx = canvas.getContext('2d');
+
 var oldx = 0; //起始点x
 var oldy = 0; //起始点y
 var midx = 0; //中点x
 var midy = 0; //中点y
-var onoff = false;
+var onoff = false; //PC端鼠标是否点下标志
 
-var outCanvas = document.getElementById("outCanvas");
-var outCtx = outCanvas.getContext('2d');
+var linew = 15; //线条粗细
+var linecolor = 'black';  //线条颜色
+var size = document.getElementById('size'); //画笔大小select部件
+var outSize = document.getElementById('pixelSize'); //像素大小select部件
+size.onchange = function() { linew = size.value; }
 
-//检测UA
-var ua = navigator.userAgent;
-console.log(ua);
+//======================================UA检测==========================
+var ua = navigator.userAgent; 
 var system = {
   win : false,
   mac : false,
@@ -30,47 +35,48 @@ system.iphone = ua.indexOf('iPhone') > -1;
 system.android = ua.indexOf('Android') > -1;
 
 getViewPort();
-
-var linew = 15;
-var linecolor = 'black';
-var size = document.getElementById('size');
-var outSize = document.getElementById('pixelSize');
-
-// canvas框
-ctx.fillStyle = "white";
+ctx.fillStyle = "orange"; 
 ctx.fillRect(0, 0, canvas.width, canvas.height);
-outCtx.fillStyle = "white";
-outCtx.fillRect(0, 0, outCanvas.width, outCanvas.height);
 
-//判断移动端还是PC
-if (system.win || system.mac || system.linux) {
-  //画笔大小选择
-  size.onchange = function() { 
-    linew = size.value; 
-  }
+//===================================适配移动端和PC端===============================
+if (system.win || system.mac ) {
   canvas.addEventListener('mousedown', down, false); //鼠标点击下去
   canvas.addEventListener('mousemove', draw, false); //鼠标移动
   canvas.addEventListener('mouseup', up, false);     //鼠标弹起取消画图
   var gen_bt = document.getElementById('gen_bt');
 } else if (system.android || system.iphone) {
+  document.getElementById("outForm").style.marginTop="30px";
+  document.getElementById('outForm').style.fontSize="19px";
+  document.getElementById('outForm').style.height="130px";
+  document.getElementById('clear_bt').style.marginTop="30px";
+  document.getElementById('predict_bt').style.marginTop="30px";
+  document.getElementById('result_bt').style.marginTop="25px";
+  document.getElementById('hint').style.marginTop="25px";
+
   window.onload = mobLoad();
 }
 
-function mobLoad() {
-  canvas.addEventListener('touchstart',
-     function(event) {
-       //触摸点按下事件
-       if (event.targetTouches.length == 1) {
-         var touch = event.targetTouches[0];
-         oldx = touch.clientX - canvas.offsetLeft;
-         oldy = touch.clientY - canvas.offsetTop;
-         canvas.addEventListener('touchmove',tMove,false);
-         canvas.addEventListener('touchend',tEnd,false);
-       }
-     },
-     false);
+
+//===================================WebSocket部分=================================
+//定义变量
+var remoteHref = getRemoteIp();
+var ws = new WebSocket("ws://"+remoteHref+"/preNum");
+ws.onopen = function(e) {
+//  alert("open ws successfully");
+}
+ws.onmessage = function(e) {
+  var data = JSON.parse(e.data);
+  var res_bt = document.getElementById("result_bt")
+  if(data.result){
+     res_bt.value=data.result; 
+  }
 }
 
+
+
+//===========================语句部分结束====函数部分开始====================================
+//==================================前端部分函数============================================
+//获取视图大小
 function getViewPort() {
   var viewHeight = window.innerHeight || document.documentElement.clientHeight;
   var viewWidth = window.innerWidth || document.documentElement.clientWidth;
@@ -83,46 +89,30 @@ function getViewPort() {
   }
 }
 
-function genImg() {
-  var imgData = ctx.getImageData(0,0,512,512);
-  var scale = outSize.value/imgData.width;
-  var outImgData = scaleImageData(imgData,scale);
-  outCtx.putImageData(outImgData,(outCanvas.width-outSize.value)/2,(outCanvas.width-outSize.value)/2);
+//清除幕布
+function clearCanvas() {
+  // ctx.clearRect(0, 0, canvas.clientWidth, canvas.clientHeight);
+  ctx.fillStyle = "orange";
+  ctx.beginPath();
+  ctx.fillRect(0, 0, canvas.offsetWidth, canvas.offsetHeight);
+  ctx.closePath();
 }
 
-function scaleImageData(imageData, scale) {
-  var scaled =
-      outCtx.createImageData(imageData.width * scale, imageData.height * scale);
-  for (var row = 0; row < imageData.height; row++) {
-    for (var col = 0; col < imageData.width; col++) {
-      var sourcePixel = [
-        imageData.data[(row * imageData.width + col) * 4 + 0],
-        imageData.data[(row * imageData.width + col) * 4 + 1],
-        imageData.data[(row * imageData.width + col) * 4 + 2],
-        imageData.data[(row * imageData.width + col) * 4 + 3]
-      ];
-      for (var y = 0; y < scale; y++) {
-        var destRow = Math.floor(row * scale) + y;
-        for (var x = 0; x < scale; x++) {
-          var destCol = Math.floor(col * scale) + x;
-          for (var i = 0; i < 4; i++) {
-            scaled.data[(destRow * scaled.width + destCol) * 4 + i] = sourcePixel[i];
-          }
-        }
-      }
-    }
-  }
-  return scaled;
-}
 
+//=====================================PC端函数======================================
+//PC端鼠标按下
 function down(event) {
   onoff = true;
   oldx = event.clientX - canvas.offsetLeft;
   oldy = event.clientY - canvas.offsetTop;
 };
 
-function up() { onoff = false; }
+//PC端鼠标起来
+function up() { 
+  onoff = false; 
+}
 
+//PC端鼠标移动
 function draw(event) {
   if (onoff == true) {
     //获取新点和中点
@@ -147,20 +137,25 @@ function draw(event) {
   };
 }
 
-function clearCanvas() {
-  // ctx.clearRect(0, 0, canvas.clientWidth, canvas.clientHeight);
-  ctx.fillStyle = "white";
-  ctx.beginPath();
-  ctx.fillRect(0, 0, canvas.offsetWidth, canvas.offsetHeight);
-  ctx.closePath();
 
-  // outCtx.clearRect(0, 0, outCanvas.clientWidth, outCanvas.clientHeight);
-  outCtx.fillStyle = "white";
-  outCtx.beginPath();
-  outCtx.fillRect(0, 0, outCanvas.offsetWidth, outCanvas.offsetHeight);
-  outCtx.closePath();
+//====================================移动端函数========================================
+//移动端加载函数
+function mobLoad() {
+  canvas.addEventListener('touchstart',
+    function(event) {
+      //触摸点按下事件
+      if (event.targetTouches.length == 1) {
+        var touche = event.targetTouches[0];
+        oldx = touche.clientX - canvas.offsetLeft;
+        oldy = touche.clientY - canvas.offsetTop;
+        canvas.addEventListener('touchmove',tMove,false);
+        canvas.addEventListener('touchend',tEnd,false);
+      }
+    },
+    false);
 }
 
+//移动端手指移动
 function tMove(event){
   //获取新点和中点
   var touche = event.targetTouches[0];
@@ -168,6 +163,11 @@ function tMove(event){
   var newy = touche.clientY - canvas.offsetTop;
   midx = 0.5*(newx+oldx);
   midy = 0.5*(newy+oldy);
+
+  //设置粗细和颜色
+  ctx.lineWidth = linew;
+  ctx.strokeStyle = linecolor;
+  ctx.lineCap = 'round'
 
   ctx.beginPath();
   ctx.moveTo(oldx,oldy);
@@ -178,7 +178,76 @@ function tMove(event){
   oldy = newy;
 }
 
+//移动端手指离开
 function tEnd(event) {
   //手机离开屏幕的事件
   ctx.closePath();
+}
+
+
+//====================================WebSocket部分函数=======================================
+//发送消息函数
+function sendMessage(uData) {
+  var data = {
+    number: uData,
+  }
+  if(data.number)
+    ws.send(JSON.stringify(data));
+  else 
+    alert("RGBA数据为空!");
+    return false;
+}
+
+//获取服务器ip
+function getRemoteIp(){
+  var urlPath = window.document.location.href;  //浏览器显示地址 http://10.15.5.83:5555/ISV/demo.aspx?a=1&b=2
+  // var docPath = window.document.location.pathname; //文件在服务器相对地址 /ISV/demo.aspx
+  // var index = urlPath.indexOf(docPath);
+  var serverPath = urlPath.substring(7, urlPath.length-1);//服务器ip 192.168.137.1
+  return serverPath;
+}
+
+
+//====================================识别数字部分===============================================
+//识别函数
+function recognizeNum(){
+  var uData =  genImg();
+  sendMessage(uData);
+}
+
+
+//缩放imageData,scale:倍数,返回:imageData
+function scaleImageData(imageData, scale) {
+  var scaled =
+      ctx.createImageData(imageData.width * scale, imageData.height * scale);
+  for (var row = 0; row < imageData.height; row++) {
+    for (var col = 0; col < imageData.width; col++) {
+      var sourcePixel = [
+        imageData.data[(row * imageData.width + col) * 4 + 0],
+        imageData.data[(row * imageData.width + col) * 4 + 1],
+        imageData.data[(row * imageData.width + col) * 4 + 2],
+        imageData.data[(row * imageData.width + col) * 4 + 3]
+      ];
+      for (var y = 0; y < scale; y++) {
+        var destRow = Math.floor(row * scale) + y;
+        for (var x = 0; x < scale; x++) {
+          var destCol = Math.floor(col * scale) + x;
+          for (var i = 0; i < 4; i++) {
+            scaled.data[(destRow * scaled.width + destCol) * 4 + i] = sourcePixel[i];
+          }
+        }
+      }
+    }
+  }
+//  alert(scaled.data.length);
+  return scaled;
+}
+
+//生成输出的Data,返回RGBA四个通道像素数组
+function genImg() {
+  var imgData = ctx.getImageData(0,0,canvas.clientWidth, canvas.clientHeight);
+  var scale = outSize.value/imgData.width;
+  var outImgData = scaleImageData(imgData,scale);
+  //outCtx.putImageData(outImgData,(outCanvas.width-outSize.value)/2,(outCanvas.width-outSize.value)/2);
+  return outImgData.data;
 }

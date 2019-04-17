@@ -1,0 +1,69 @@
+body {
+
+    margin:0;
+    padding:0;
+    text-align: center;
+}
+#outForm {
+    width: 600px;
+	height: 90px;
+    font-size: 17px;
+    font-family: SimHei;
+	line-height: 40px;
+	margin:0 auto;
+}
+input {
+	margin-left: 15px;
+	color:white;
+}
+
+.txt{
+    width:60px;
+    height:30px;
+    border-width: 0px;
+    border-radius:5px;
+    outline:none;
+    color:black;
+    background:#F0FFFF;
+}
+
+.btn {
+    width:100px;
+    height:38px;
+    border-width: 0px;
+    border-radius: 5px;
+    font-size: 19px;
+    outline: none;
+    color: white;
+    background: #1E90FF;
+}
+        
+#result_bt{
+    width:100px;
+    height:35px;
+    font-size: 19px;
+    border-width: 0px;
+    border-radius: 5px;
+    outline: none;
+    color: black;
+    background:#00FFCC;
+}
+
+.sel{
+    padding-right: 10px;
+    background: rgba(0,0,0,0);
+    height: 30px;
+    border: 1px #1a1a1a solid;
+    border-radius: 5px;
+}
+select::-ms-expand { display: none; }
+
+.hint{
+    width:100px;
+    height:30px;
+    border-width: 0px;
+    font-size:21px;
+    text-align:center;
+    outline: none;
+    color: black;
+}
