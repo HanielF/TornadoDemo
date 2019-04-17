@@ -3,14 +3,18 @@
 
 项目名后加了UI的，都是对原本的同名项目进行了完善和美化，相反，原本的项目会比较简陋，只是初期的版本。
 
+
 ## 目录
-* [chatInWeb_UI](##chatInWeb_UI)
-* [handwrittenDigitRecognition](##handwrittenDigitRecognition)
-* [lotteryOnline_UI](##lotteryOnline_UI)
-* [AsyncPractice](##AsyncPractice)
-* [poemMakerPro](##poemMakerPro)
-* [h5Practice](##h5Practice)
-* [template_project](##template_project)
+* [chatInWeb_UI](#chatInWeb_UI)
+* [handwrittenDigitRecognition](#handwrittenDigitRecognition)
+* [lotteryOnline_UI](#lotteryOnline_UI)
+* [AsyncPractice](#AsyncPractice)
+* [poemMakerPro](#poemMakerPro)
+* [h5Practice](#h5Practice)
+* [template_project](#template_project)
+
+## 运行
+完整的项目基本上都是用到了WebSocket，所以运行的话，**直接运行server.py即可**
 
 <a name="chatInWeb_UI"></a>
 ## chatInWeb_UI
@@ -30,9 +34,15 @@
 
 <a name="handwrittenDigitRecognition"></a>
 ## handwrittenDigitRecognition
-**Web端手写数字识别系统**，在浏览器使用鼠标或者手写数字，发送到后端用Tensorflow训练的模型识别
+**手写数字识别系统**，基于LeNet-5和MNIST
+
+主要是在浏览器使用鼠标或者手写数字，发送到后端用Tensorflow训练的模型识别
+
+兼容PC端和移动端，推荐用chrome打开页面
 
 HTML+CSS+JS+Canvas+Tornado+Websocket+Tensorflow+LeNet-5模型
+
+项目过程中遇到的问题记录在了我的博客[MNIST入门-手写数字识别问题集锦](https://catchdream.me/2019/04/18/MNIST入门-手写数字识别问题集锦/)
 
 <a name="lotteryOnline_UI"></a>
 ## lotteryOnline_UI
