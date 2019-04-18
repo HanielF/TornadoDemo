@@ -58,12 +58,13 @@ static目录下的js/, css/, html/, images，这几个目录按需求自己创�
 
 ### 运行截图
 登录界面:
+
 ![登录界面](images/chat1.png)
 
-小明视角:
+小明视角:   
 ![](images/chat2.png)
 
-小白视角:
+小白视角:    
 ![](images/chat3.png)
 
 
@@ -81,9 +82,11 @@ HTML+CSS+JS+Canvas+Tornado+Websocket+Tensorflow+LeNet-5模型
 项目过程中遇到的问题记录在了我的博客[MNIST入门-手写数字识别问题集锦](https://catchdream.me/2019/04/18/MNIST入门-手写数字识别问题集锦/)
 
 ### 运行截图
-PC端运行截图如下：
+PC端运行截图如下：      
 ![PC端页面](images/PC.png)
-移动端运行截图如下：
+
+
+移动端运行截图如下：    
 ![移动端页面](images/mobile.jpg)
 
 
@@ -100,9 +103,10 @@ PC端运行截图如下：
 - 分批抽奖，每次默认5人
 
 ### 运行截图
-主页运行截图如下：
+主页运行截图如下：    
 ![主页](images/lotteryOnline1.png)
-提交后抽奖结果页面如下：
+
+提交后抽奖结果页面如下：    
 ![抽奖结果页面](images/lotteryOnline2.png)
 
 <a name="AsyncPractice"></a>
