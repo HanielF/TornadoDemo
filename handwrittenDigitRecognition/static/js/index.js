@@ -34,7 +34,10 @@ system.linux = p.indexOf('Linux') == 0;
 system.iphone = ua.indexOf('iPhone') > -1;
 system.android = ua.indexOf('Android') > -1;
 
+//获得视图窗口大小
 getViewPort();
+
+//设置背景为橙色
 ctx.fillStyle = "orange"; 
 ctx.fillRect(0, 0, canvas.width, canvas.height);
 
@@ -61,9 +64,9 @@ if (system.win || system.mac ) {
 //定义变量
 var remoteHref = getRemoteIp();
 var ws = new WebSocket("ws://"+remoteHref+"/preNum");
-ws.onopen = function(e) {
-//  alert("open ws successfully");
-}
+ws.onopen = function(e) { }
+
+//接收到识别的数字后修改结果区域
 ws.onmessage = function(e) {
   var data = JSON.parse(e.data);
   var res_bt = document.getElementById("result_bt")
@@ -73,10 +76,9 @@ ws.onmessage = function(e) {
 }
 
 
-
 //===========================语句部分结束====函数部分开始====================================
 //==================================前端部分函数============================================
-//获取视图大小
+//获取视图大小，如果是移动端，还要设置canvas宽度和高度，以及下方文字区域宽度
 function getViewPort() {
   var viewHeight = window.innerHeight || document.documentElement.clientHeight;
   var viewWidth = window.innerWidth || document.documentElement.clientWidth;
@@ -91,7 +93,6 @@ function getViewPort() {
 
 //清除幕布
 function clearCanvas() {
-  // ctx.clearRect(0, 0, canvas.clientWidth, canvas.clientHeight);
   ctx.fillStyle = "orange";
   ctx.beginPath();
   ctx.fillRect(0, 0, canvas.offsetWidth, canvas.offsetHeight);
@@ -100,7 +101,7 @@ function clearCanvas() {
 
 
 //=====================================PC端函数======================================
-//PC端鼠标按下
+//PC端鼠标按下事件，设置oldx和oldy
 function down(event) {
   onoff = true;
   oldx = event.clientX - canvas.offsetLeft;
@@ -118,6 +119,8 @@ function draw(event) {
     //获取新点和中点
     var newx = event.clientX - canvas.offsetLeft;
     var newy = event.clientY - canvas.offsetTop;
+    
+    //取中点为二次贝塞尔的控制点
     midx = 0.5*(newx+oldx);
     midy = 0.5*(newy+oldy);
 
@@ -139,7 +142,7 @@ function draw(event) {
 
 
 //====================================移动端函数========================================
-//移动端加载函数
+//移动端加载函数，添加touchstart, touchmove, touchend事件
 function mobLoad() {
   canvas.addEventListener('touchstart',
     function(event) {
@@ -161,6 +164,8 @@ function tMove(event){
   var touche = event.targetTouches[0];
   var newx = touche.clientX - canvas.offsetLeft;
   var newy = touche.clientY - canvas.offsetTop;
+  
+  //设置二次贝塞尔曲线的控制点为中点
   midx = 0.5*(newx+oldx);
   midy = 0.5*(newy+oldy);
 
@@ -169,18 +174,20 @@ function tMove(event){
   ctx.strokeStyle = linecolor;
   ctx.lineCap = 'round'
 
+  //绘图
   ctx.beginPath();
   ctx.moveTo(oldx,oldy);
   ctx.quadraticCurveTo(midx,midy,newx,newy);
   ctx.stroke();
 
+  //转移节点
   oldx = newx;
   oldy = newy;
 }
 
-//移动端手指离开
+
+//移动端手指离开事件
 function tEnd(event) {
-  //手机离开屏幕的事件
   ctx.closePath();
 }
 
@@ -200,9 +207,7 @@ function sendMessage(uData) {
 
 //获取服务器ip
 function getRemoteIp(){
-  var urlPath = window.document.location.href;  //浏览器显示地址 http://10.15.5.83:5555/ISV/demo.aspx?a=1&b=2
-  // var docPath = window.document.location.pathname; //文件在服务器相对地址 /ISV/demo.aspx
-  // var index = urlPath.indexOf(docPath);
+  var urlPath = window.document.location.href;  //浏览器显示地址 http://192.168.137.1:8000/
   var serverPath = urlPath.substring(7, urlPath.length-1);//服务器ip 192.168.137.1
   return serverPath;
 }
@@ -216,7 +221,9 @@ function recognizeNum(){
 }
 
 
-//缩放imageData,scale:倍数,返回:imageData
+//缩放imageData函数
+//scale:倍数
+//返回值:缩放后的imageData
 function scaleImageData(imageData, scale) {
   var scaled =
       ctx.createImageData(imageData.width * scale, imageData.height * scale);
@@ -239,15 +246,14 @@ function scaleImageData(imageData, scale) {
       }
     }
   }
-//  alert(scaled.data.length);
   return scaled;
 }
+
 
 //生成输出的Data,返回RGBA四个通道像素数组
 function genImg() {
   var imgData = ctx.getImageData(0,0,canvas.clientWidth, canvas.clientHeight);
   var scale = outSize.value/imgData.width;
   var outImgData = scaleImageData(imgData,scale);
-  //outCtx.putImageData(outImgData,(outCanvas.width-outSize.value)/2,(outCanvas.width-outSize.value)/2);
   return outImgData.data;
 }
