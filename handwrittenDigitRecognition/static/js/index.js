@@ -8,7 +8,20 @@ var oldx = 0; //起始点x
 var oldy = 0; //起始点y
 var midx = 0; //中点x
 var midy = 0; //中点y
+var newx = 0; //最新点x
+var newy = 0; //最新点y
+
+var mid_1x = 0; //第一个中点
+var mid_1y = 0; //第一个中点
+var mid_2x = 0; //第二个中点
+var mid_2y = 0; //第二个中点
+
 var onoff = false; //PC端鼠标是否点下标志
+
+var xStart = canvas.clientWidth; //所有点最左边的x坐标
+var yStart = canvas.clientHeight; //所有点最上面的y坐标
+var xEnd = 0;  //所有点的最右边的x坐标
+var yEnd = 0; //所有点的最下面的y坐标
 
 var linew = 15; //线条粗细
 var linecolor = 'black';  //线条颜色
@@ -34,10 +47,7 @@ system.linux = p.indexOf('Linux') == 0;
 system.iphone = ua.indexOf('iPhone') > -1;
 system.android = ua.indexOf('Android') > -1;
 
-//获得视图窗口大小
 getViewPort();
-
-//设置背景为橙色
 ctx.fillStyle = "orange"; 
 ctx.fillRect(0, 0, canvas.width, canvas.height);
 
@@ -64,9 +74,9 @@ if (system.win || system.mac ) {
 //定义变量
 var remoteHref = getRemoteIp();
 var ws = new WebSocket("ws://"+remoteHref+"/preNum");
-ws.onopen = function(e) { }
-
-//接收到识别的数字后修改结果区域
+ws.onopen = function(e) {
+//  alert("open ws successfully");
+}
 ws.onmessage = function(e) {
   var data = JSON.parse(e.data);
   var res_bt = document.getElementById("result_bt")
@@ -76,9 +86,10 @@ ws.onmessage = function(e) {
 }
 
 
+
 //===========================语句部分结束====函数部分开始====================================
 //==================================前端部分函数============================================
-//获取视图大小，如果是移动端，还要设置canvas宽度和高度，以及下方文字区域宽度
+//获取视图大小
 function getViewPort() {
   var viewHeight = window.innerHeight || document.documentElement.clientHeight;
   var viewWidth = window.innerWidth || document.documentElement.clientWidth;
@@ -93,6 +104,7 @@ function getViewPort() {
 
 //清除幕布
 function clearCanvas() {
+  // ctx.clearRect(0, 0, canvas.clientWidth, canvas.clientHeight);
   ctx.fillStyle = "orange";
   ctx.beginPath();
   ctx.fillRect(0, 0, canvas.offsetWidth, canvas.offsetHeight);
@@ -101,11 +113,13 @@ function clearCanvas() {
 
 
 //=====================================PC端函数======================================
-//PC端鼠标按下事件，设置oldx和oldy
+//PC端鼠标按下
 function down(event) {
   onoff = true;
   oldx = event.clientX - canvas.offsetLeft;
   oldy = event.clientY - canvas.offsetTop;
+  midx = oldx;
+  midy = oldy;
 };
 
 //PC端鼠标起来
@@ -117,12 +131,18 @@ function up() {
 function draw(event) {
   if (onoff == true) {
     //获取新点和中点
-    var newx = event.clientX - canvas.offsetLeft;
-    var newy = event.clientY - canvas.offsetTop;
-    
-    //取中点为二次贝塞尔的控制点
-    midx = 0.5*(newx+oldx);
-    midy = 0.5*(newy+oldy);
+    newx = event.clientX - canvas.offsetLeft;
+    newy = event.clientY - canvas.offsetTop;
+    mid_1x = 0.5*(oldx+midx);
+    mid_1y = 0.5*(oldy+midy);
+    mid_2x = 0.5*(newx+midx);
+    mid_2y = 0.5*(newy+midy);
+
+    //修改xStart, xEnd, yStart, yEnd
+    if(newx<xStart)xStart = newx;
+    if(newx>xEnd)xEnd = newx;
+    if(newy<yStart)yStart = newy;
+    if(newy>yEnd)yEnd = newy;
 
     //设置粗细和颜色
     ctx.lineWidth = linew;
@@ -130,19 +150,21 @@ function draw(event) {
     ctx.lineCap = 'round';
 
     //绘制二次贝塞尔
-    ctx.moveTo(oldx,oldy);
-    ctx.quadraticCurveTo( midx , midy , newx , newy );
+    ctx.moveTo(mid_1x,mid_1y);
+    ctx.quadraticCurveTo( midx , midy , mid_2x , mid_2y );
     ctx.stroke();
 
     //转移新旧坐标
-    oldx = newx;
-    oldy = newy;
+    oldx = midx;
+    oldy = midy;
+    midx = newx;
+    midy = newy;
   };
 }
 
 
 //====================================移动端函数========================================
-//移动端加载函数，添加touchstart, touchmove, touchend事件
+//移动端加载函数
 function mobLoad() {
   canvas.addEventListener('touchstart',
     function(event) {
@@ -151,6 +173,8 @@ function mobLoad() {
         var touche = event.targetTouches[0];
         oldx = touche.clientX - canvas.offsetLeft;
         oldy = touche.clientY - canvas.offsetTop;
+        midx = oldx;
+        midy = oldy;
         canvas.addEventListener('touchmove',tMove,false);
         canvas.addEventListener('touchend',tEnd,false);
       }
@@ -162,32 +186,38 @@ function mobLoad() {
 function tMove(event){
   //获取新点和中点
   var touche = event.targetTouches[0];
-  var newx = touche.clientX - canvas.offsetLeft;
-  var newy = touche.clientY - canvas.offsetTop;
-  
-  //设置二次贝塞尔曲线的控制点为中点
-  midx = 0.5*(newx+oldx);
-  midy = 0.5*(newy+oldy);
+  newx = touche.clientX - canvas.offsetLeft;
+  newy = touche.clientY - canvas.offsetTop;
+  mid_1x = 0.5*(oldx+midx);
+  mid_1y = 0.5*(oldy+midy);
+  mid_2x = 0.5*(newx+midx);
+  mid_2y = 0.5*(newy+midy);
 
+  //修改xStart, xEnd, yStart, yEnd
+  if(newx<xStart)xStart = newx;
+  else if(newx>xEnd)xEnd = newx;
+  if(newy<yStart)yStart = newy;
+  else if(newy>yEnd)yEnd = newy;
+    
   //设置粗细和颜色
   ctx.lineWidth = linew;
   ctx.strokeStyle = linecolor;
   ctx.lineCap = 'round'
 
-  //绘图
   ctx.beginPath();
-  ctx.moveTo(oldx,oldy);
-  ctx.quadraticCurveTo(midx,midy,newx,newy);
+  ctx.moveTo(mid_1x,mid_1y);
+  ctx.quadraticCurveTo( midx , midy , mid_2x , mid_2y );
   ctx.stroke();
 
-  //转移节点
-  oldx = newx;
-  oldy = newy;
+  oldx = midx;
+  oldy = midy;
+  midx = newx;
+  midy = newy;
 }
 
-
-//移动端手指离开事件
+//移动端手指离开
 function tEnd(event) {
+  //手机离开屏幕的事件
   ctx.closePath();
 }
 
@@ -207,7 +237,9 @@ function sendMessage(uData) {
 
 //获取服务器ip
 function getRemoteIp(){
-  var urlPath = window.document.location.href;  //浏览器显示地址 http://192.168.137.1:8000/
+  var urlPath = window.document.location.href;  //浏览器显示地址 http://10.15.5.83:5555/ISV/demo.aspx?a=1&b=2
+  // var docPath = window.document.location.pathname; //文件在服务器相对地址 /ISV/demo.aspx
+  // var index = urlPath.indexOf(docPath);
   var serverPath = urlPath.substring(7, urlPath.length-1);//服务器ip 192.168.137.1
   return serverPath;
 }
@@ -221,9 +253,7 @@ function recognizeNum(){
 }
 
 
-//缩放imageData函数
-//scale:倍数
-//返回值:缩放后的imageData
+//缩放imageData,scale:倍数,返回:imageData
 function scaleImageData(imageData, scale) {
   var scaled =
       ctx.createImageData(imageData.width * scale, imageData.height * scale);
@@ -246,14 +276,69 @@ function scaleImageData(imageData, scale) {
       }
     }
   }
+//  alert(scaled.data.length);
   return scaled;
 }
 
-
 //生成输出的Data,返回RGBA四个通道像素数组
 function genImg() {
-  var imgData = ctx.getImageData(0,0,canvas.clientWidth, canvas.clientHeight);
+  var tmpWidth = xEnd - xStart;
+  var tmpHeight = yEnd - yStart;
+  var maxtmp;
+
+  //使矩形变成正方形
+  if(tmpWidth>tmpHeight){   //宽度比较大
+    maxtmp = tmpWidth;
+    var diff = (tmpWidth - tmpHeight)/2;
+    //如果超过了上边界
+    if(diff>yStart){
+      yStart = 0;
+      yEnd = tmpWidth;
+    //如果超过了下边界
+    }else if(diff>canvas.clientHeight-yEnd){
+      yEnd = canvas.clientHeight;
+      yStart = canvas.clientHeight-tmpWidth;
+    }else{
+      yStart = Math.floor(yStart - diff);
+      yEnd = yStart+tmpWidth;
+    }
+  }else{                  //长度比较大
+    maxtmp = tmpHeight;
+    var diff = (tmpHeight - tmpWidth)/2;
+    //如果超过了左边界
+    if(diff>xStart){
+      xStart = 0;
+      xEnd = tmpHeight;
+    //如果超过了右边界
+    }else if(diff>canvas.clientWidth-xEnd){
+      xEnd = canvas.clientWidth;
+      xStart = canvas.clientWidth-tmpHeight;
+    }else{
+      xStart = Math.floor(xStart -diff);
+      xEnd = xStart+tmpHeight;
+    }
+  }
+
+  //对这个正方形上下左右都扩大一点，防止数字太贴边
+  var minStart = Math.min(xStart,yStart);
+  var minEnd = Math.min(canvas.clientWidth-xEnd,canvas.clientHeight-yEnd);
+  var minLength = Math.min(minStart,minEnd);
+  minLength = Math.min(60,minLength);
+
+  xStart = xStart - minLength;
+  yStart = yStart - minLength;
+  xEnd = xEnd + minLength;
+  yEnd = yEnd + minLength;
+
+//  var bt = document.getElementById("clear_bt");
+//  var bt2 = document.getElementById("predict_bt");
+//  bt.value=xStart+' '+xEnd;
+//  bt2.value = yStart +' '+yEnd;
+
+  //对绘图的一部分进行截取并获取imageData
+  var imgData = ctx.getImageData(xStart,yStart,maxtmp+2*minLength, maxtmp+2*minLength);
   var scale = outSize.value/imgData.width;
   var outImgData = scaleImageData(imgData,scale);
+  //outCtx.putImageData(outImgData,(outCanvas.width-outSize.value)/2,(outCanvas.width-outSize.value)/2);
   return outImgData.data;
 }
