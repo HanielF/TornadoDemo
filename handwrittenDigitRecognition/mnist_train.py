@@ -49,20 +49,21 @@ def train(mnist):
     train_step = tf.train.GradientDescentOptimizer(0.01).minimize(loss, global_step=global_step)
     #定义学习操作：采用梯度下降求一次模型训练参数，并对求得的模型参数计算滑动平均值
     train_op = tf.group(train_step, variable_average_ops)
-    saver = tf.train.Saver()
-    # saver = tf.train.import_meta_graph('./model/model-183001.meta')# 加载模型结构
+    #saver = tf.train.Saver()
+    saver = tf.train.import_meta_graph('./model/model-183001.meta')# 加载模型结构
     os.environ["CUDA_VISIBLE_DEVICES"] = '0'
     # 配置每个进程80%GPU
     config = tf.ConfigProto()
     config.gpu_options.per_process_gpu_memory_fraction = 0.7
     config.gpu_options.allow_growth = True
     with tf.Session(config=config) as sess:
-        tf.global_variables_initializer().run()
+        #tf.global_variables_initializer().run()
         # 模型恢复
-        #model_file=tf.train.latest_checkpoint('./model/')
-        #saver.restore(sess,model_file)
-        print("model restored")
-        for i in range(TRAIN_STEP):
+        model_file=tf.train.latest_checkpoint('./model/')
+        latest_step=model_file[model_file.index('-')+1:model_file.index('.')]
+        saver.restore(sess,model_file)
+        #print("model restored")
+        for i in range(latest_step+1,TRAIN_STEP):
             # 由于神经网络的输入大小为[BATCH_SIZE,IMAGE_SIZE,IMAGE_SIZE,CHANNEL]，因此需要reshape输入。
             xs,ys = mnist.train.next_batch(BATCH_SIZE)
             reshape_xs = np.reshape(xs,(BATCH_SIZE, mnist_interence.IMAGE_SIZE,
