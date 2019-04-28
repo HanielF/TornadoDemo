@@ -38,7 +38,6 @@
 
 static目录下的js/, css/, html/, images，这几个目录按需求自己创建
 
-
 <a name="chatInWeb_UI"></a>
 ## chatInWeb_UI
 ### 介绍
