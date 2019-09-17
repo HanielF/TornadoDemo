@@ -8,6 +8,7 @@
 * [template_project](#template_project)
 * [chatInWeb_UI](#chatInWeb_UI)
 * [handwrittenDigitRecognition](#handwrittenDigitRecognition)
+* [flowerRecognitionPractice](#FlowerRecognitionPractice)
 * [lotteryOnline_UI](#lotteryOnline_UI)
 * [AsyncPractice](#AsyncPractice)
 * [h5Practice](#h5Practice)
@@ -15,7 +16,8 @@
 ## 运行
 完整的项目基本上都是用到了WebSocket，所以运行的话，**直接运行server.py即可**
 
-然后浏览器打开127.0.0.1:端口号，端口这里在config.py查看，一般是8000
+- PC端：浏览器打开127.0.0.1:端口号，端口这里在config.py查看，一般是8000
+- 移动端：如果是在自己电脑运行，请将手机连接到电脑的热点上，共用一个局域网，然后使用chrome浏览器打开电脑主机ip:8000；如果是在服务器运行，请用chrome浏览器打开服务器ip:8000
 
 
 <a name="template_project"></a>
@@ -87,6 +89,30 @@ PC端运行截图如下：
 
 移动端运行截图如下：    
 ![移动端页面](images/mobile.jpg)
+
+
+<a name="flowerRecognitionPractice"></a>
+## flowerRecognitionPractice
+### 介绍
+花朵识别实践，基于迁移学习Inception-V3模型和Tensorflow
+HTML+CSS+JS+Cropper.js+Canvas+Tornado+WebSocket+Tensorflow+Inception-V3
+功能：
+- 拍摄花朵或者选择话多图片，识别种类
+- 目前训练好的模型可以识别月季、三色堇、万寿菊、石榴花、紫娇花这五种花
+- 兼容PC端和移动端，PC端选择本地图片上传，移动端**请使用chrome**浏览器
+
+**注:**    
+如需添加其他种类的花朵种类识别，将花朵图片500张按照类别分目录存放于flower_photos目录下，然后命令行运行`python data_process.py`,更新`flower_processed_data.py`数据文件，再命令行`python train.py`重新构建神经网络模型
+
+### 运行截图
+主页截图：  
+![主页](./images/Blank_Mob.jpg)
+
+识别过程截图：  
+![识别花朵](./images/月季Test1.jpg)
+
+识别结果截图：  
+![识别结果](./images/月季Test2.jpg)
 
 
 <a name="lotteryOnline_UI"></a>
